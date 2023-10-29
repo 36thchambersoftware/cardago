@@ -7,14 +7,14 @@ import (
 )
 
 type Tip struct {
-	Block           int    `json:"block,omitempty"`
-	Epoch           int    `json:"epoch,omitempty"`
 	Era             string `json:"era,omitempty"`
 	Hash            string `json:"hash,omitempty"`
+	SyncProgress    string `json:"syncProgress,omitempty"`
+	Block           int    `json:"block,omitempty"`
+	Epoch           int    `json:"epoch,omitempty"`
 	Slot            int    `json:"slot,omitempty"`
 	SlotInEpoch     int    `json:"slotInEpoch,omitempty"`
 	SlotsToEpochEnd int    `json:"slotsToEpochEnd,omitempty"`
-	SyncProgress    string `json:"syncProgress,omitempty"`
 }
 
 func QueryTip() Tip {

@@ -15,6 +15,7 @@ type DiscordConfig struct {
 	ServerID            string `yaml:"serverID"`
 	UserID              string `yaml:"userID"`
 	ChannelID           string `yaml:"channelID"`
+	VoiceChannelID      string `yaml:"voiceChannelID"`
 }
 
 func NotifyKESExpiryDate(config DiscordConfig, KESExpiryDate time.Time) {
@@ -35,7 +36,7 @@ func NotifyKESExpiryDate(config DiscordConfig, KESExpiryDate time.Time) {
 	startDate := KESExpiryDate
 	endDate := KESExpiryDate.AddDate(0, 0, 1)
 	event := discordgo.GuildScheduledEventParams{
-		ChannelID:          "992428710349258826",
+		ChannelID:          config.VoiceChannelID,
 		Name:               "kes-expiry-date",
 		Description:        KESExpiryMessage,
 		ScheduledStartTime: &startDate,
