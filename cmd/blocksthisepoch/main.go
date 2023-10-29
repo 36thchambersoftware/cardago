@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 
 	"cardano/cardago/internal/cardano"
@@ -15,5 +16,10 @@ func main() {
 
 	scheduledBlocks := cardano.GetScheduledBlocks(config.LeaderLogDirectory, config.LeaderLogPrefix, config.LeaderLogExtension)
 
-	discord.NotifyScheduledBlocks(config.Discord, scheduledBlocks)
+	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", config.Discord.UserID, scheduledBlocks)
+	if len(scheduledBlocks) == 0 {
+		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", config.Discord.UserID)
+	}
+
+	discord.NotifyChannel(config.Discord, scheduledBlocksMessage)
 }

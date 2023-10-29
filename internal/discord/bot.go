@@ -5,8 +5,6 @@ import (
 	"log/slog"
 	"time"
 
-	"cardano/cardago/internal/cardano"
-
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -53,27 +51,6 @@ func NotifyKESExpiryDate(config DiscordConfig, KESExpiryDate time.Time) {
 	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", st)
 }
 
-func NotifyScheduledBlocks(config DiscordConfig, scheduledBlocks []cardano.ScheduledBlock) {
-	discord, err := discordgo.New(config.AuthenticationToken)
-	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
-	}
-
-	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", config.UserID, scheduledBlocks)
-	if len(scheduledBlocks) == 0 {
-		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", config.UserID)
-	}
-
-	message := discordgo.MessageSend{
-		Content: scheduledBlocksMessage,
-	}
-	response, err := discord.ChannelMessageSendComplex(config.ChannelID, &message)
-	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ChannelMessageSend", err)
-	}
-	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
-}
-
 func NotifyChannel(config DiscordConfig, content string) {
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
@@ -90,7 +67,7 @@ func NotifyChannel(config DiscordConfig, content string) {
 	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
 }
 
-func ScheduleEvent(config DiscordConfig, start time.Time, end time.Time, content string) {
+func ScheduleEvent(config DiscordConfig, name string, start time.Time, end time.Time, content string) {
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
@@ -100,7 +77,7 @@ func ScheduleEvent(config DiscordConfig, start time.Time, end time.Time, content
 	endDate := end
 	event := discordgo.GuildScheduledEventParams{
 		ChannelID:          config.VoiceChannelID,
-		Name:               "kes-expiry-date",
+		Name:               name,
 		Description:        content,
 		ScheduledStartTime: &startDate,
 		ScheduledEndTime:   &endDate,
