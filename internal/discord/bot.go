@@ -73,3 +73,45 @@ func NotifyScheduledBlocks(config DiscordConfig, scheduledBlocks []cardano.Sched
 	}
 	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
 }
+
+func NotifyChannel(config DiscordConfig, content string) {
+	discord, err := discordgo.New(config.AuthenticationToken)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
+	}
+
+	message := discordgo.MessageSend{
+		Content: content,
+	}
+	response, err := discord.ChannelMessageSendComplex(config.ChannelID, &message)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ChannelMessageSend", err)
+	}
+	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
+}
+
+func ScheduleEvent(config DiscordConfig, start time.Time, end time.Time, content string) {
+	discord, err := discordgo.New(config.AuthenticationToken)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
+	}
+
+	startDate := start
+	endDate := end
+	event := discordgo.GuildScheduledEventParams{
+		ChannelID:          config.VoiceChannelID,
+		Name:               "kes-expiry-date",
+		Description:        content,
+		ScheduledStartTime: &startDate,
+		ScheduledEndTime:   &endDate,
+		PrivacyLevel:       discordgo.GuildScheduledEventPrivacyLevelGuildOnly,
+		Status:             discordgo.GuildScheduledEventStatusScheduled,
+		EntityType:         discordgo.GuildScheduledEventEntityTypeVoice,
+	}
+
+	st, err := discord.GuildScheduledEventCreate(config.ServerID, &event)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "GuildScheduledEventParams", err)
+	}
+	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", st)
+}
