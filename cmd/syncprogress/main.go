@@ -11,13 +11,22 @@ import (
 
 func main() {
 	config := config.Get()
-	config.LoadConfig()
+	err := config.LoadConfig()
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return
+	}
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
-	syncProgress := cardano.QueryTip().SyncProgress
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "SYNCPROGRESS", syncProgress)
+	tip, err := cardano.QueryTip()
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return
+	}
 
-	message := fmt.Sprintf("<@%s> SYNC PROGRESS: %s", config.Discord.UserID, syncProgress)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "SYNCPROGRESS", tip.SyncProgress)
+
+	message := fmt.Sprintf("<@%s> SYNC PROGRESS: %s", config.Discord.UserID, tip.SyncProgress)
 
 	discord.NotifyChannel(config.Discord, message)
 }

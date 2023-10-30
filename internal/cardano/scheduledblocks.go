@@ -14,11 +14,15 @@ type ScheduledBlock struct {
 	Datetime   time.Time
 }
 
-func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leaderLogExtension string) []ScheduledBlock {
+func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leaderLogExtension string) ([]ScheduledBlock, error) {
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
 	scheduledBlocks := []ScheduledBlock{}
-	epoch := QueryTip().Epoch
-	sEpoch := strconv.Itoa(epoch)
+	tip, err := QueryTip()
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return []ScheduledBlock{}, err
+	}
+	sEpoch := strconv.Itoa(tip.Epoch)
 	path := fmt.Sprintf("%s/%s%s.%s", leaderLogDirectory, leaderLogPrefix, sEpoch, leaderLogExtension)
 	command := fmt.Sprintf("tail -n +3 %s", path)
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "COMMAND", command)
@@ -26,12 +30,13 @@ func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leade
 	output, err := exec.Command("bash", "-c", command).CombinedOutput()
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		return scheduledBlocks, err
 	}
 
 	lines := strings.Split(string(output), "\n")
 	if len(lines) == 0 || len(output) == 0 {
 		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "BLOCKS", "No scheduled blocks")
-		return scheduledBlocks
+		return scheduledBlocks, err
 	}
 
 	for _, line := range lines {
@@ -53,5 +58,5 @@ func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leade
 		scheduledBlocks = append(scheduledBlocks, scheduledBlock)
 	}
 
-	return scheduledBlocks
+	return scheduledBlocks, err
 }

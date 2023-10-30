@@ -17,12 +17,13 @@ type Tip struct {
 	SlotsToEpochEnd int    `json:"slotsToEpochEnd,omitempty"`
 }
 
-func QueryTip() Tip {
+func QueryTip() (Tip, error) {
 	tip := Tip{}
 
 	output, err := exec.Command("cardano-cli", "query", "tip", "--mainnet").CombinedOutput()
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", output)
+		return tip, err
 	}
 
 	err = json.Unmarshal(output, &tip)
@@ -31,5 +32,5 @@ func QueryTip() Tip {
 	}
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "KES", tip)
 
-	return tip
+	return tip, err
 }

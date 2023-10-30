@@ -19,7 +19,7 @@ type KESPeriodInfo struct {
 	KesStartKesInterval                      int64  `json:"qKesStartKesInterval"`
 }
 
-func GetKESPeriodInfo(network string, nodeCertPath string) KESPeriodInfo {
+func GetKESPeriodInfo(network string, nodeCertPath string) (KESPeriodInfo, error) {
 	kes := KESPeriodInfo{}
 	// Create a new command
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "NETWORK", network, "PATH", nodeCertPath)
@@ -28,6 +28,7 @@ func GetKESPeriodInfo(network string, nodeCertPath string) KESPeriodInfo {
 	output, err := exec.Command("bash", "-c", command).CombinedOutput()
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		return kes, err
 	}
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", output)
 
@@ -35,10 +36,11 @@ func GetKESPeriodInfo(network string, nodeCertPath string) KESPeriodInfo {
 	err = json.Unmarshal(output, &kes)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return kes, err
 	}
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "KES", kes)
 
-	return kes
+	return kes, err
 
 	// For testing, these numbers might be like this..
 	// kestemp := KESPeriodInfo{

@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+
 	"cardano/cardago/internal/discord"
 
 	"github.com/sagikazarmark/slog-shim"
@@ -15,7 +17,7 @@ type Config struct {
 	Discord            discord.DiscordConfig `yaml:"discord"`
 }
 
-func (cfg *Config) LoadConfig() {
+func (cfg *Config) LoadConfig() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("../../.")
@@ -23,12 +25,28 @@ func (cfg *Config) LoadConfig() {
 	err := viper.ReadInConfig()
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return err
 	}
 
 	err = viper.Unmarshal(cfg)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return err
 	}
+
+	_, err = os.Stat(cfg.NodeCertPath)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return err
+	}
+
+	_, err = os.Stat(cfg.LeaderLogDirectory)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return err
+	}
+
+	return err
 }
 
 func Get() *Config {

@@ -12,10 +12,18 @@ import (
 
 func main() {
 	config := config.Get()
-	config.LoadConfig()
+	err := config.LoadConfig()
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return
+	}
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
-	KESPeriodInfo := cardano.GetKESPeriodInfo("mainnet", config.NodeCertPath)
+	KESPeriodInfo, err := cardano.GetKESPeriodInfo("mainnet", config.NodeCertPath)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return
+	}
 
 	KESExpiryDate, err := time.Parse("2006-01-02T15:04:05Z", KESPeriodInfo.KesKesKeyExpiry)
 	if err != nil {
