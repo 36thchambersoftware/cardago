@@ -11,12 +11,22 @@ import (
 
 func main() {
 	config := config.Get()
-	config.LoadConfig()
+	err := config.LoadConfig()
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		return
+	}
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
-	scheduledBlocks := cardano.GetScheduledBlocks(config.LeaderLogDirectory, config.LeaderLogPrefix, config.LeaderLogExtension)
+	scheduledBlocks, err := cardano.GetScheduledBlocks(config.LeaderLogDirectory, config.LeaderLogPrefix, config.LeaderLogExtension)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return
+	}
 
-	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", config.Discord.UserID, scheduledBlocks)
+	scheduledBlocksText := fmt.Sprintln(scheduledBlocks)
+
+	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", config.Discord.UserID, scheduledBlocksText)
 	if len(scheduledBlocks) == 0 {
 		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", config.Discord.UserID)
 	}
