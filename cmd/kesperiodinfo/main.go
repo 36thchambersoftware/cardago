@@ -33,5 +33,5 @@ func main() {
 
 	KESExpiryMessage := fmt.Sprintf("<@%s> KES Expiry Date: %s", config.Discord.UserID, KESExpiryDate.Format("2006-01-02 15:04:05"))
 
-	discord.NotifyChannel(config.Discord, KESExpiryMessage)
+	discord.ExecuteWebhook(config.Discord, KESExpiryMessage)
 }

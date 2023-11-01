@@ -31,5 +31,5 @@ func main() {
 		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", config.Discord.UserID)
 	}
 
-	discord.NotifyChannel(config.Discord, scheduledBlocksMessage)
+	discord.ExecuteWebhook(config.Discord, scheduledBlocksMessage)
 }

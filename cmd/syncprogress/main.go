@@ -28,5 +28,5 @@ func main() {
 
 	message := fmt.Sprintf("<@%s> SYNC PROGRESS: %s", config.Discord.UserID, tip.SyncProgress)
 
-	discord.NotifyChannel(config.Discord, message)
+	discord.ExecuteWebhook(config.Discord, message)
 }

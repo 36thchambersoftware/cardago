@@ -7,14 +7,6 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-type DiscordConfig struct {
-	AuthenticationToken string `yaml:"authenticationToken"`
-	ServerID            string `yaml:"serverID"`
-	UserID              string `yaml:"userID"`
-	ChannelID           string `yaml:"channelID"`
-	VoiceChannelID      string `yaml:"voiceChannelID"`
-}
-
 func NotifyChannel(config DiscordConfig, content string) {
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
