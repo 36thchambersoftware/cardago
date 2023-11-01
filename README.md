@@ -11,6 +11,7 @@ Create a file called config.yaml in the root project directory and fill in at le
     leaderLogPrefix: 'yourPrefix_'
     leaderLogExtension: 'txt'
     discord:
+      webhookURL: 'https://your.discord/webhook/url?wait=true'
       authenticationToken: '123456789'
       serverID: '123456789'
       channelID: '123456789'
