@@ -19,7 +19,7 @@ func main() {
 	}
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
-	KESPeriodInfo, err := cardano.GetKESPeriodInfo("mainnet", config.NodeCertPath)
+	KESPeriodInfo, err := cardano.GetKESPeriodInfo(config.Cardano.NodeCertPath)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return

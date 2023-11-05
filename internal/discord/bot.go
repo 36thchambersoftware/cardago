@@ -7,7 +7,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-func NotifyChannel(config DiscordConfig, content string) {
+func NotifyChannel(config Config, content string) {
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
@@ -23,7 +23,7 @@ func NotifyChannel(config DiscordConfig, content string) {
 	slog.Info("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
 }
 
-func ScheduleEvent(config DiscordConfig, name string, start time.Time, end time.Time, content string) {
+func ScheduleEvent(config Config, name string, start time.Time, end time.Time, content string) {
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)

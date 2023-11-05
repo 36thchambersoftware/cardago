@@ -3,7 +3,6 @@ package cardano
 import (
 	"encoding/json"
 	"log/slog"
-	"os/exec"
 )
 
 type Tip struct {
@@ -20,7 +19,14 @@ type Tip struct {
 func QueryTip() (Tip, error) {
 	tip := Tip{}
 
-	output, err := exec.Command("cardano-cli", "query", "tip", "--mainnet").CombinedOutput()
+	args := []string{
+		"query",
+		"tip",
+		"--mainnet",
+	}
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+
+	output, err := Run(args)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", output)
 		return tip, err
@@ -30,7 +36,7 @@ func QueryTip() (Tip, error) {
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "KES", tip)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "TIP", tip)
 
 	return tip, err
 }

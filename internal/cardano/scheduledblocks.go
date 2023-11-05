@@ -1,20 +1,20 @@
 package cardano
 
 import (
-	"fmt"
+	"errors"
 	"log/slog"
-	"os/exec"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
 type ScheduledBlock struct {
-	SlotNumber int64
 	Datetime   time.Time
+	SlotNumber int64
 }
 
-func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leaderLogExtension string) ([]ScheduledBlock, error) {
+func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
 	scheduledBlocks := []ScheduledBlock{}
 	tip, err := QueryTip()
@@ -22,14 +22,54 @@ func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leade
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return []ScheduledBlock{}, err
 	}
-	sEpoch := strconv.Itoa(tip.Epoch)
-	path := fmt.Sprintf("%s/%s%s.%s", leaderLogDirectory, leaderLogPrefix, sEpoch, leaderLogExtension)
-	command := fmt.Sprintf("tail -n +3 %s", path)
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "COMMAND", command)
 
-	output, err := exec.Command("bash", "-c", command).CombinedOutput()
+	epochLength := config.GetShelleyGenesis().EpochLength
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "EPOCHLENGTH", epochLength)
+	if epochLength < 1 {
+		return []ScheduledBlock{}, errors.New("epoch length incorrect - check shelley genesis file")
+	}
+
+	epochProgress := float32(tip.SlotInEpoch) / float32(epochLength)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "Epoch progress", epochProgress)
+	if epochProgress < 0.75 {
+		return []ScheduledBlock{}, errors.New("too early to check")
+	}
+
+	path := logs.GetLeaderPath(tip.Epoch)
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		// The file does not exist
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "Epoch", tip.Epoch)
+	} else {
+		// The file exists
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", tip.Epoch)
+		return scheduledBlocks, errors.New("epoch already checked")
+	}
+
+	args := []string{
+		"query", "leadership-schedule",
+		"--mainnet",
+		"--genesis", config.ShelleyGenesisFilePath,
+		"--stake-pool-id", config.StakePoolID,
+		"--vrf-signing-key-file", config.VRFSKeyFilePath,
+		"--next",
+	}
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+
+	output, err := Run(args)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		return scheduledBlocks, err
+	}
+
+	err = logScheduledBlocks(logs, tip.Epoch, output)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
+		return scheduledBlocks, err
+	}
+
+	err = logScheduledBlocks(logs, tip.Epoch, output)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
 		return scheduledBlocks, err
 	}
 
@@ -59,4 +99,25 @@ func GetScheduledBlocks(leaderLogDirectory string, leaderLogPrefix string, leade
 	}
 
 	return scheduledBlocks, err
+}
+
+func logScheduledBlocks(logs Logs, epoch int, content []byte) error {
+	nextEpoch := epoch + 1
+	path := logs.GetLeaderPath(nextEpoch)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", path)
+
+	f, err := os.Create(path)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "cannot create leader log file", err)
+		return err
+	}
+
+	defer f.Close()
+	_, err = f.WriteString(string(content))
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "cannot write to leader log file", err)
+		return err
+	}
+
+	return err
 }

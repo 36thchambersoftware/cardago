@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ExecuteWebhook(config DiscordConfig, content string) {
+func ExecuteWebhook(config Config, content string) {
 	// Check config url
 	webhookURL, err := url.Parse(config.WebhookURL)
 	if err != nil {

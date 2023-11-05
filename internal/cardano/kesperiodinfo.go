@@ -2,9 +2,8 @@ package cardano
 
 import (
 	"encoding/json"
-	"fmt"
 	"log/slog"
-	"os/exec"
+	"strings"
 )
 
 type KESPeriodInfo struct {
@@ -19,21 +18,31 @@ type KESPeriodInfo struct {
 	KesStartKesInterval                      int64  `json:"qKesStartKesInterval"`
 }
 
-func GetKESPeriodInfo(network string, nodeCertPath string) (KESPeriodInfo, error) {
+func GetKESPeriodInfo(opCertPath string) (KESPeriodInfo, error) {
 	kes := KESPeriodInfo{}
-	// Create a new command
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "NETWORK", network, "PATH", nodeCertPath)
-	command := fmt.Sprintf("cardano-cli query kes-period-info --%s --op-cert-file %s | tail -n +3", network, nodeCertPath)
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "COMMAND", command)
-	output, err := exec.Command("bash", "-c", command).CombinedOutput()
-	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
-		return kes, err
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "PATH", opCertPath)
+
+	args := []string{
+		"query",
+		"kes-period-info",
+		"--mainnet",
+		"--op-cert-file",
+		opCertPath,
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", output)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+
+	output, err := Run(args)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+	}
+
+	// convert raw output to KES model
+	individualLines := strings.Split(string(output), "\n")
+	dataArray := individualLines[2:]
+	data := strings.Join(dataArray, "")
 
 	// Decode the json data
-	err = json.Unmarshal(output, &kes)
+	err = json.Unmarshal([]byte(data), &kes)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return kes, err
@@ -41,19 +50,4 @@ func GetKESPeriodInfo(network string, nodeCertPath string) (KESPeriodInfo, error
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "KES", kes)
 
 	return kes, err
-
-	// For testing, these numbers might be like this..
-	// kestemp := KESPeriodInfo{
-	// 	KesCurrentKesPeriod:                      816,
-	// 	KesEndKesInterval:                        878,
-	// 	KesKesKeyExpiry:                          "2024-01-15T21:44:51Z",
-	// 	KesMaxKESEvolutions:                      62,
-	// 	KesNodeStateOperationalCertificateNumber: 4,
-	// 	KesOnDiskOperationalCertificateNumber:    5,
-	// 	KesRemainingSlotsInKesPeriod:             7977800,
-	// 	KesSlotsPerKesPeriod:                     129600,
-	// 	KesStartKesInterval:                      816,
-	// }
-
-	// return kestemp
 }

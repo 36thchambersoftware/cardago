@@ -1,6 +1,6 @@
 package discord
 
-type DiscordConfig struct {
+type Config struct {
 	AuthenticationToken string `yaml:"authenticationToken"`
 	ServerID            string `yaml:"serverID"`
 	UserID              string `yaml:"userID"`

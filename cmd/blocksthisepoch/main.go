@@ -18,7 +18,7 @@ func main() {
 	}
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
-	scheduledBlocks, err := cardano.GetScheduledBlocks(config.LeaderLogDirectory, config.LeaderLogPrefix, config.LeaderLogExtension)
+	scheduledBlocks, err := cardano.GetScheduledBlocks(config.Cardano, config.Logs)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return

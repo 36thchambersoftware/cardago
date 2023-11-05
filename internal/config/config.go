@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 
+	"cardano/cardago/internal/cardano"
 	"cardano/cardago/internal/discord"
 
 	"github.com/sagikazarmark/slog-shim"
@@ -10,11 +11,9 @@ import (
 )
 
 type Config struct {
-	NodeCertPath       string                `yaml:"nodeCertPath"`
-	LeaderLogDirectory string                `yaml:"leaderLogDirectory"`
-	LeaderLogPrefix    string                `yaml:"leaderLogPrefix"`
-	LeaderLogExtension string                `yaml:"leaderLogExtension"`
-	Discord            discord.DiscordConfig `yaml:"discord"`
+	Cardano cardano.Config `yaml:"cardano"`
+	Logs    cardano.Logs   `yaml:"logs"`
+	Discord discord.Config `yaml:"discord"`
 }
 
 func (cfg *Config) LoadConfig() error {
@@ -33,16 +32,31 @@ func (cfg *Config) LoadConfig() error {
 		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return err
 	}
+	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
 
-	_, err = os.Stat(cfg.NodeCertPath)
+	_, err = os.Stat(cfg.Logs.Leader.Directory)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", err)
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Logs)
+
 		return err
 	}
 
-	_, err = os.Stat(cfg.LeaderLogDirectory)
+	_, err = os.Stat(cfg.Cardano.NodeCertPath)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.NodeCertPath", err)
+		return err
+	}
+
+	_, err = os.Stat(cfg.Cardano.ShelleyGenesisFilePath)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.ShelleyGenesisFilePath", err)
+		return err
+	}
+
+	_, err = os.Stat(cfg.Cardano.VRFSKeyFilePath)
+	if err != nil {
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.VRFSKeyFilePath", err)
 		return err
 	}
 
