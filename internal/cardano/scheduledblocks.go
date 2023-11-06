@@ -23,6 +23,10 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 		return []ScheduledBlock{}, err
 	}
 
+	if tip.SyncProgress != "100.00" {
+		return []ScheduledBlock{}, errors.New("sync progress is less than 100 - wait for full sync")
+	}
+
 	epochLength := config.GetShelleyGenesis().EpochLength
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "EPOCHLENGTH", epochLength)
 	if epochLength < 1 {
@@ -35,13 +39,15 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 		return []ScheduledBlock{}, errors.New("too early to check")
 	}
 
-	path := logs.GetLeaderPath(tip.Epoch)
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		// The file does not exist
-		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "Epoch", tip.Epoch)
-	} else {
-		// The file exists
-		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", tip.Epoch)
+	nextEpoch := tip.Epoch + 1
+	path := logs.GetLeaderPath(nextEpoch)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "PATH", path)
+	existingLogFile, err := os.Stat(path)
+	doesNotExist := os.IsNotExist(err)
+	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "doesNotExist", doesNotExist)
+	if !doesNotExist {
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "name", existingLogFile.Name(), "modified", existingLogFile.ModTime())
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", nextEpoch)
 		return scheduledBlocks, errors.New("epoch already checked")
 	}
 
@@ -61,13 +67,7 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 		return scheduledBlocks, err
 	}
 
-	err = logScheduledBlocks(logs, tip.Epoch, output)
-	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
-		return scheduledBlocks, err
-	}
-
-	err = logScheduledBlocks(logs, tip.Epoch, output)
+	err = logScheduledBlocks(logs, nextEpoch, output)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
 		return scheduledBlocks, err
@@ -79,9 +79,30 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 		return scheduledBlocks, err
 	}
 
-	for _, line := range lines {
+	// the first two lines of the output are ignored
+	//      SlotNo                          UTC Time
+	// -------------------------------------------------------------
+	blockLines := lines[2:]
+
+	if len(blockLines) < 1 {
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "lines", lines, "blockLines", blockLines)
+		return scheduledBlocks, err
+	}
+
+	for _, line := range blockLines {
 		scheduledBlock := ScheduledBlock{}
 		pieces := strings.Fields(line)
+		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "pieces", pieces)
+		if len(pieces) == 0 {
+			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "no scheduled blocks")
+			return scheduledBlocks, err
+		}
+
+		if len(pieces) != 2 {
+			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch - check output")
+			return scheduledBlocks, err
+		}
+
 		slotNumber, err := strconv.ParseInt(pieces[0], 10, 64) // e.g. 97470387
 		if err != nil {
 			slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
@@ -101,8 +122,7 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 	return scheduledBlocks, err
 }
 
-func logScheduledBlocks(logs Logs, epoch int, content []byte) error {
-	nextEpoch := epoch + 1
+func logScheduledBlocks(logs Logs, nextEpoch int, content []byte) error {
 	path := logs.GetLeaderPath(nextEpoch)
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", path)
 
