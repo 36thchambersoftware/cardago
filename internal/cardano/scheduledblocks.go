@@ -94,18 +94,18 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 		pieces := strings.Fields(line)
 		slog.Info("CARDAGO", "PACKAGE", "CARDANO", "pieces", pieces)
 		if len(pieces) == 0 {
-			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "no scheduled blocks")
+			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "scheduled blocks", "ZERO")
 			return scheduledBlocks, err
 		}
 
 		if len(pieces) != 2 {
-			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch - check output")
+			slog.Info("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch", "check output")
 			return scheduledBlocks, err
 		}
 
-		slotNumber, err := strconv.ParseInt(pieces[0], 10, 64) // e.g. 97470387
+		slotNumber, errParse := strconv.ParseInt(pieces[0], 10, 64) // e.g. 97470387
 		if err != nil {
-			slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+			slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errParse)
 		}
 
 		slotTime, err := time.Parse("2006-01-02T15:04:05Z", pieces[1])
@@ -122,10 +122,20 @@ func GetScheduledBlocks(config Config, logs Logs) ([]ScheduledBlock, error) {
 	return scheduledBlocks, err
 }
 
+/**
+ * Logs the scheduled Cardano blocks to the leader log file.
+ *
+ * @param logs The logs directory.
+ * @param nextEpoch The next epoch.
+ * @param content The scheduled Cardano blocks.
+ * @return error Any error that occurred while logging the scheduled Cardano blocks.
+ */
 func logScheduledBlocks(logs Logs, nextEpoch int, content []byte) error {
+	// Get the leader log file path.
 	path := logs.GetLeaderPath(nextEpoch)
 	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", path)
 
+	// Create the leader log file.
 	f, err := os.Create(path)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "cannot create leader log file", err)
@@ -133,11 +143,14 @@ func logScheduledBlocks(logs Logs, nextEpoch int, content []byte) error {
 	}
 
 	defer f.Close()
+
+	// Write the scheduled Cardano blocks to the leader log file.
 	_, err = f.WriteString(string(content))
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "cannot write to leader log file", err)
 		return err
 	}
 
+	// Return nil to indicate that the scheduled Cardano blocks were logged successfully.
 	return err
 }

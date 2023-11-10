@@ -1,11 +1,11 @@
 package discord
 
 type Config struct {
-	AuthenticationToken string `yaml:"authenticationToken"`
-	ServerID            string `yaml:"serverID"`
+	AuthenticationToken string `yaml:"authenticationToken,omitempty"`
+	ServerID            string `yaml:"serverID,omitempty"`
 	UserID              string `yaml:"userID"`
-	ChannelID           string `yaml:"channelID"`
-	VoiceChannelID      string `yaml:"voiceChannelID"`
+	ChannelID           string `yaml:"channelID,omitempty"`
+	VoiceChannelID      string `yaml:"voiceChannelID,omitempty"`
 	WebhookURL          string `yaml:"webhookURL"`
 }
 
