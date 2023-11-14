@@ -29,6 +29,7 @@ func (cfg *Config) LoadConfig() error {
 	// Add the configuration search paths.
 	viper.AddConfigPath("../../.")
 	viper.AddConfigPath(".")
+	viper.AddConfigPath("/home/cardano/scripts/cardago/.")
 
 	// Read the configuration file.
 	err := viper.ReadInConfig()

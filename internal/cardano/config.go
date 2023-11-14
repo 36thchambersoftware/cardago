@@ -3,8 +3,9 @@ package cardano
 import (
 	"encoding/json"
 	"fmt"
-	"log/slog"
 	"os"
+
+	"cardano/cardago/internal/log"
 )
 
 type ShelleyGenesis struct {
@@ -29,20 +30,22 @@ type Leader struct {
 }
 
 func (cfg *Config) GetShelleyGenesis() *ShelleyGenesis {
+	logger := log.InitializeLogger()
 	ShelleyGenesis := &ShelleyGenesis{}
 	data, err := os.ReadFile(cfg.ShelleyGenesisFilePath)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
 	}
 	err = json.Unmarshal(data, ShelleyGenesis)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
 	}
 
 	return ShelleyGenesis
 }
 
 func (logs *Logs) GetLeaderPath(epoch int) string {
-	slog.Info("GetLeaderPath", "directory", logs.Leader.Directory, "prefix", logs.Leader.Prefix, "epoch", epoch, "extension", logs.Leader.Extension)
+	logger := log.InitializeLogger()
+	logger.Infow("GetLeaderPath", "directory", logs.Leader.Directory, "prefix", logs.Leader.Prefix, "epoch", epoch, "extension", logs.Leader.Extension)
 	return fmt.Sprintf("%s/%s%d%s", logs.Leader.Directory, logs.Leader.Prefix, epoch, logs.Leader.Extension)
 }

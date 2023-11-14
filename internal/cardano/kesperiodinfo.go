@@ -2,8 +2,9 @@ package cardano
 
 import (
 	"encoding/json"
-	"log/slog"
 	"strings"
+
+	"cardano/cardago/internal/log"
 )
 
 type KESPeriodInfo struct {
@@ -19,8 +20,9 @@ type KESPeriodInfo struct {
 }
 
 func GetKESPeriodInfo(opCertPath string) (KESPeriodInfo, error) {
+	logger := log.InitializeLogger()
 	kes := KESPeriodInfo{}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "PATH", opCertPath)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "PATH", opCertPath)
 
 	args := []string{
 		"query",
@@ -29,11 +31,11 @@ func GetKESPeriodInfo(opCertPath string) (KESPeriodInfo, error) {
 		"--op-cert-file",
 		opCertPath,
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
 
 	output, err := Run(args)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 	}
 
 	// convert raw output to KES model
@@ -44,10 +46,10 @@ func GetKESPeriodInfo(opCertPath string) (KESPeriodInfo, error) {
 	// Decode the json data
 	err = json.Unmarshal([]byte(data), &kes)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return kes, err
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "KES", kes)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "KES", kes)
 
 	return kes, err
 }

@@ -2,7 +2,8 @@ package cardano
 
 import (
 	"encoding/json"
-	"log/slog"
+
+	"cardano/cardago/internal/log"
 )
 
 type Tip struct {
@@ -17,6 +18,7 @@ type Tip struct {
 }
 
 func QueryTip() (Tip, error) {
+	logger := log.InitializeLogger()
 	tip := Tip{}
 
 	args := []string{
@@ -24,19 +26,19 @@ func QueryTip() (Tip, error) {
 		"tip",
 		"--mainnet",
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
 
 	output, err := Run(args)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", output)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", output)
 		return tip, err
 	}
 
 	err = json.Unmarshal(output, &tip)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "TIP", tip)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "TIP", tip)
 
 	return tip, err
 }

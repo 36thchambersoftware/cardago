@@ -1,16 +1,19 @@
 package cardano
 
 import (
-	"log/slog"
 	"os/exec"
+
+	"cardano/cardago/internal/log"
 )
 
 func Run(args []string) ([]byte, error) {
-	output, err := exec.Command("cardano-cli", args...).CombinedOutput()
+	logger := log.InitializeLogger()
+
+	output, err := exec.Command("/usr/local/bin/cardano-cli", args...).CombinedOutput()
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", output)
+	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", output)
 
 	return output, err
 }

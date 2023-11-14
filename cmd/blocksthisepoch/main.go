@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log/slog"
 
 	"cardano/cardago/internal/cardano"
 	"cardano/cardago/internal/config"
 	"cardano/cardago/internal/discord"
+	"cardano/cardago/internal/log"
 )
 
 /**
@@ -14,28 +14,29 @@ import (
  */
 func main() {
 	// Get the configuration from the configuration file.
-	config := config.Get()
-	err := config.LoadConfig()
+	logger := log.InitializeLogger()
+	cfg := config.Get()
+	err := cfg.LoadConfig()
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
+	logger.Infow("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", cfg)
 
 	// Get the scheduled Cardano blocks.
-	scheduledBlocks, err := cardano.GetScheduledBlocks(config.Cardano, config.Logs)
+	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano, cfg.Logs)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return
 	}
 
 	scheduledBlocksText := fmt.Sprintln(scheduledBlocks)
 	// Create a Discord message with the list of scheduled blocks.
-	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", config.Discord.UserID, scheduledBlocksText)
+	scheduledBlocksMessage := fmt.Sprintf("<@%s> SCHEDULED BLOCKS: %s", cfg.Discord.UserID, scheduledBlocksText)
 	if len(scheduledBlocks) == 0 {
-		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", config.Discord.UserID)
+		scheduledBlocksMessage = fmt.Sprintf("<@%s> NO SCHEDULED BLOCKS", cfg.Discord.UserID)
 	}
 
 	// Execute the Discord webhook to send the message.
-	discord.ExecuteWebhook(config.Discord, scheduledBlocksMessage)
+	discord.ExecuteWebhook(cfg.Discord, scheduledBlocksMessage)
 }
