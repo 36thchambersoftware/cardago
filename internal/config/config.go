@@ -12,7 +12,7 @@ import (
 
 type Config struct {
 	Cardano cardano.Config `yaml:"cardano"`
-	Logs    cardano.Logs   `yaml:"logs"`
+	Leader  cardano.Leader `yaml:"leader"`
 	Discord discord.Config `yaml:"discord"`
 }
 
@@ -47,10 +47,10 @@ func (cfg *Config) LoadConfig() error {
 	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
 
 	// Check if the leader log directory exists.
-	_, err = os.Stat(cfg.Logs.Leader.Directory)
+	_, err = os.Stat(cfg.Leader.Directory)
 	if err != nil {
 		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", err)
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Logs)
+		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Leader)
 
 		return err
 	}

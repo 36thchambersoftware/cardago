@@ -17,10 +17,7 @@ type Config struct {
 	ShelleyGenesisFilePath string `yaml:"shelleyGenesisFilePath"`
 	StakePoolID            string `yaml:"stakepoolid"`
 	VRFSKeyFilePath        string `yaml:"vrfskeyfilepath"`
-}
-
-type Logs struct {
-	Leader Leader `yaml:"leader"`
+	Leader                 Leader `yaml:"leader"`
 }
 
 type Leader struct {
@@ -44,8 +41,8 @@ func (cfg *Config) GetShelleyGenesis() *ShelleyGenesis {
 	return ShelleyGenesis
 }
 
-func (logs *Logs) GetLeaderPath(epoch int) string {
+func (leader Leader) GetLeaderPath(epoch int) string {
 	logger := log.InitializeLogger()
-	logger.Infow("GetLeaderPath", "directory", logs.Leader.Directory, "prefix", logs.Leader.Prefix, "epoch", epoch, "extension", logs.Leader.Extension)
-	return fmt.Sprintf("%s/%s%d%s", logs.Leader.Directory, logs.Leader.Prefix, epoch, logs.Leader.Extension)
+	logger.Infow("GetLeaderPath", "directory", leader.Directory, "prefix", leader.Prefix, "epoch", epoch, "extension", leader.Extension)
+	return fmt.Sprintf("%s/%s%d%s", leader.Directory, leader.Prefix, epoch, leader.Extension)
 }

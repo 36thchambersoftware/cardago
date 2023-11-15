@@ -24,7 +24,7 @@ func main() {
 	logger.Infow("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", cfg)
 
 	// Get the scheduled Cardano blocks.
-	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano, cfg.Logs)
+	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano)
 	if err != nil {
 		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return

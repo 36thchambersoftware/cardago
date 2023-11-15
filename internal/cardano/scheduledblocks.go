@@ -15,7 +15,7 @@ type ScheduledBlock struct {
 	SlotNumber int64
 }
 
-func GetScheduledBlocks(cfg Config, logs Logs) ([]ScheduledBlock, error) {
+func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	logger := log.InitializeLogger()
 	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
 	scheduledBlocks := []ScheduledBlock{}
@@ -42,7 +42,7 @@ func GetScheduledBlocks(cfg Config, logs Logs) ([]ScheduledBlock, error) {
 	}
 
 	nextEpoch := tip.Epoch + 1
-	path := logs.GetLeaderPath(nextEpoch)
+	path := cfg.Leader.GetLeaderPath(nextEpoch)
 	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "PATH", path)
 	existingLogFile, err := os.Stat(path)
 	doesNotExist := os.IsNotExist(err)
@@ -69,7 +69,7 @@ func GetScheduledBlocks(cfg Config, logs Logs) ([]ScheduledBlock, error) {
 		return scheduledBlocks, err
 	}
 
-	err = logScheduledBlocks(logs, nextEpoch, output)
+	err = logScheduledBlocks(cfg.Leader, nextEpoch, output)
 	if err != nil {
 		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
 		return scheduledBlocks, err
@@ -132,7 +132,7 @@ func GetScheduledBlocks(cfg Config, logs Logs) ([]ScheduledBlock, error) {
  * @param content The scheduled Cardano blocks.
  * @return error Any error that occurred while logging the scheduled Cardano blocks.
  */
-func logScheduledBlocks(logs Logs, nextEpoch int, content []byte) error {
+func logScheduledBlocks(logs Leader, nextEpoch int, content []byte) error {
 	logger := log.InitializeLogger()
 	// Get the leader log file path.
 	path := logs.GetLeaderPath(nextEpoch)
