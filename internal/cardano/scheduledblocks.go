@@ -16,12 +16,11 @@ type ScheduledBlock struct {
 }
 
 func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
-	logger := log.InitializeLogger()
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
 	scheduledBlocks := []ScheduledBlock{}
 	tip, err := QueryTip()
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return []ScheduledBlock{}, err
 	}
 
@@ -30,26 +29,26 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	}
 
 	epochLength := cfg.GetShelleyGenesis().EpochLength
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "EPOCHLENGTH", epochLength)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "EPOCHLENGTH", epochLength)
 	if epochLength < 1 {
 		return []ScheduledBlock{}, errors.New("epoch length incorrect - check shelley genesis file")
 	}
 
 	epochProgress := float32(tip.SlotInEpoch) / float32(epochLength)
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "Epoch progress", epochProgress)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "Epoch progress", epochProgress)
 	if epochProgress < 0.75 {
 		return []ScheduledBlock{}, errors.New("too early to check")
 	}
 
 	nextEpoch := tip.Epoch + 1
 	path := cfg.Leader.GetLeaderPath(nextEpoch)
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "PATH", path)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "PATH", path)
 	existingLogFile, err := os.Stat(path)
 	doesNotExist := os.IsNotExist(err)
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "doesNotExist", doesNotExist)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "doesNotExist", doesNotExist)
 	if !doesNotExist {
-		logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "name", existingLogFile.Name(), "modified", existingLogFile.ModTime())
-		logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", nextEpoch)
+		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "name", existingLogFile.Name(), "modified", existingLogFile.ModTime())
+		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", nextEpoch)
 		return scheduledBlocks, errors.New("epoch already checked")
 	}
 
@@ -61,23 +60,23 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 		"--vrf-signing-key-file", cfg.VRFSKeyFilePath,
 		"--next",
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+	log.Debugw("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
 
 	output, err := Run(args)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", string(output))
 		return scheduledBlocks, err
 	}
 
 	err = logScheduledBlocks(cfg.Leader, nextEpoch, output)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", err)
 		return scheduledBlocks, err
 	}
 
 	lines := strings.Split(string(output), "\n")
 	if len(lines) == 0 || len(output) == 0 {
-		logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "BLOCKS", "No scheduled blocks")
+		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "BLOCKS", "No scheduled blocks")
 		return scheduledBlocks, err
 	}
 
@@ -87,32 +86,32 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	blockLines := lines[2:]
 
 	if len(blockLines) < 1 {
-		logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "lines", lines, "blockLines", blockLines)
+		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "lines", lines, "blockLines", blockLines)
 		return scheduledBlocks, err
 	}
 
 	for _, line := range blockLines {
 		scheduledBlock := ScheduledBlock{}
 		pieces := strings.Fields(line)
-		logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "pieces", pieces)
+		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "pieces", pieces)
 		if len(pieces) == 0 {
-			logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "scheduled blocks", "ZERO")
+			log.Infow("CARDAGO", "PACKAGE", "CARDANO", "scheduled blocks", "ZERO")
 			return scheduledBlocks, err
 		}
 
 		if len(pieces) != 2 {
-			logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch", "check output")
+			log.Infow("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch", "check output")
 			return scheduledBlocks, err
 		}
 
 		slotNumber, errIntParse := strconv.ParseInt(pieces[0], 10, 64) // e.g. 97470387
 		if errIntParse != nil {
-			logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errIntParse)
+			log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errIntParse)
 		}
 
 		slotTime, errTimeParse := time.Parse("2006-01-02T15:04:05Z", pieces[1])
 		if errTimeParse != nil {
-			logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errTimeParse)
+			log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errTimeParse)
 		}
 
 		scheduledBlock.SlotNumber = slotNumber
@@ -133,15 +132,14 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
  * @return error Any error that occurred while logging the scheduled Cardano blocks.
  */
 func logScheduledBlocks(logs Leader, nextEpoch int, content []byte) error {
-	logger := log.InitializeLogger()
 	// Get the leader log file path.
 	path := logs.GetLeaderPath(nextEpoch)
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", path)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "logScheduledBlocks", path)
 
 	// Create the leader log file.
 	f, err := os.Create(path)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "cannot create leader log file", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "cannot create leader log file", err)
 		return err
 	}
 
@@ -150,7 +148,7 @@ func logScheduledBlocks(logs Leader, nextEpoch int, content []byte) error {
 	// Write the scheduled Cardano blocks to the leader log file.
 	_, err = f.WriteString(string(content))
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "cannot write to leader log file", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "cannot write to leader log file", err)
 		return err
 	}
 

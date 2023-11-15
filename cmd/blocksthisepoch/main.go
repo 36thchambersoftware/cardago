@@ -14,19 +14,18 @@ import (
  */
 func main() {
 	// Get the configuration from the configuration file.
-	logger := log.InitializeLogger()
 	cfg := config.Get()
 	err := cfg.LoadConfig()
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", cfg)
+	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", cfg)
 
 	// Get the scheduled Cardano blocks.
 	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return
 	}
 

@@ -5,8 +5,8 @@ import (
 
 	"cardano/cardago/internal/cardano"
 	"cardano/cardago/internal/discord"
+	"cardano/cardago/internal/log"
 
-	"github.com/sagikazarmark/slog-shim"
 	"github.com/spf13/viper"
 )
 
@@ -14,6 +14,7 @@ type Config struct {
 	Cardano cardano.Config `yaml:"cardano"`
 	Leader  cardano.Leader `yaml:"leader"`
 	Discord discord.Config `yaml:"discord"`
+	Log     log.Log        `yaml:"log"`
 }
 
 /**
@@ -34,23 +35,23 @@ func (cfg *Config) LoadConfig() error {
 	// Read the configuration file.
 	err := viper.ReadInConfig()
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return err
 	}
 
 	// Unmarshal the configuration into the Config struct.
 	err = viper.Unmarshal(cfg)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return err
 	}
-	slog.Info("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
+	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
 
 	// Check if the leader log directory exists.
 	_, err = os.Stat(cfg.Leader.Directory)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", err)
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Leader)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Leader)
 
 		return err
 	}
@@ -58,21 +59,21 @@ func (cfg *Config) LoadConfig() error {
 	// Check if the Cardano node certificate path exists.
 	_, err = os.Stat(cfg.Cardano.NodeCertPath)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.NodeCertPath", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.NodeCertPath", err)
 		return err
 	}
 
 	// Check if the Cardano Shelley genesis file path exists.
 	_, err = os.Stat(cfg.Cardano.ShelleyGenesisFilePath)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.ShelleyGenesisFilePath", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.ShelleyGenesisFilePath", err)
 		return err
 	}
 
 	// Check if the Cardano VRFS key file path exists.
 	_, err = os.Stat(cfg.Cardano.VRFSKeyFilePath)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "Cardano.VRFSKeyFilePath", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.VRFSKeyFilePath", err)
 		return err
 	}
 
@@ -91,7 +92,7 @@ func Get() *Config {
 
 	err := viper.Unmarshal(C)
 	if err != nil {
-		slog.Error("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 	}
 
 	return C

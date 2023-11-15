@@ -11,14 +11,12 @@ import (
 )
 
 func ExecuteWebhook(config Config, content string) {
-	logger := log.InitializeLogger()
-
 	// Check config url
 	webhookURL, err := url.Parse(config.WebhookURL)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "webhook", webhookURL.String())
+	log.Debugw("CARDAGO", "PACKAGE", "DISCORD", "webhook", webhookURL.String())
 
 	// build post
 	payload := WebhookPayload{
@@ -27,9 +25,9 @@ func ExecuteWebhook(config Config, content string) {
 
 	message, err := json.Marshal(payload)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "marshal", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "marshal", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "message", string(message))
+	log.Debugw("CARDAGO", "PACKAGE", "DISCORD", "message", string(message))
 
 	client := &http.Client{}
 	data := strings.NewReader(string(message))
@@ -37,27 +35,28 @@ func ExecuteWebhook(config Config, content string) {
 	// Create a new request
 	request, err := http.NewRequest(http.MethodPost, webhookURL.String(), data)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "request", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "request", err)
 	}
 
 	request.Header.Set("Content-Type", "application/json")
 	response, err := client.Do(request)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "response", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "response", err)
 	}
 
 	if response.StatusCode == http.StatusNoContent {
-		logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "INFO", "You are not waiting for a response. Add ?wait=true to webhook url")
+		log.Warnw("CARDAGO", "PACKAGE", "DISCORD", "INFO", "You are not waiting for a response. Add ?wait=true to webhook url")
 	}
 
 	if response.StatusCode != http.StatusOK && response.StatusCode != http.StatusNoContent {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", response.StatusCode)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", response.StatusCode)
 	}
 
 	defer response.Body.Close()
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "body", body, "error", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "body", body, "error", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "success", body)
+	log.Debugw("CARDAGO", "PACKAGE", "DISCORD", "body", string(body))
+	log.Infow("CARDAGO", "PACKAGE", "DISCORD", "success", "message sent")
 }

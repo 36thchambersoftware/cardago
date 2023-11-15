@@ -6,16 +6,36 @@ import (
 	"go.uber.org/zap"
 )
 
-func InitializeLogger() *zap.SugaredLogger {
+type Log struct {
+	FilePath string `yaml:"filePath"`
+}
+
+var logger *zap.SugaredLogger
+
+func init() {
 	config := zap.NewProductionConfig()
-	config.OutputPaths = []string{"/home/cardano/scripts/cardago/cardago.log"}
-	logger, err := config.Build()
+	config.OutputPaths = []string{"cardago.log"}
+	zapper, err := config.Build()
 	if err != nil {
 		slog.Error("could not initialize config", "ERROR", err)
 	}
 
-	sugar := logger.Sugar()
-	sugar.Info("Logger initialized")
+	logger = zapper.Sugar()
+	logger.Info("Logger initialized")
+}
 
-	return sugar
+func Infow(msg string, keysAndValues ...interface{}) {
+	logger.Infow(msg, keysAndValues...)
+}
+
+func Warnw(msg string, keysAndValues ...interface{}) {
+	logger.Warnw(msg, keysAndValues...)
+}
+
+func Errorw(msg string, keysAndValues ...interface{}) {
+	logger.Errorw(msg, keysAndValues...)
+}
+
+func Debugw(msg string, keysAndValues ...interface{}) {
+	logger.Debugw(msg, keysAndValues...)
 }

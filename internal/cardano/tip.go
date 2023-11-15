@@ -18,7 +18,7 @@ type Tip struct {
 }
 
 func QueryTip() (Tip, error) {
-	logger := log.InitializeLogger()
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "QueryTip")
 	tip := Tip{}
 
 	args := []string{
@@ -26,19 +26,19 @@ func QueryTip() (Tip, error) {
 		"tip",
 		"--mainnet",
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
+	log.Debugw("CARDAGO", "PACKAGE", "CARDANO", "ARGS", args)
 
 	output, err := Run(args)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", output)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "TYPE", "query tip", "ERROR", err, "OUTPUT", string(output))
 		return tip, err
 	}
 
 	err = json.Unmarshal(output, &tip)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "TIP", tip)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "TIP", tip)
 
 	return tip, err
 }

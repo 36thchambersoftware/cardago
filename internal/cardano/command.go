@@ -7,13 +7,11 @@ import (
 )
 
 func Run(args []string) ([]byte, error) {
-	logger := log.InitializeLogger()
-
 	output, err := exec.Command("/usr/local/bin/cardano-cli", args...).CombinedOutput()
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", output)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err, "OUTPUT", string(output))
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", output)
+	log.Debugw("CARDAGO", "PACKAGE", "CARDANO", "OUTPUT", string(output))
 
 	return output, err
 }

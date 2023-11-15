@@ -27,22 +27,20 @@ type Leader struct {
 }
 
 func (cfg *Config) GetShelleyGenesis() *ShelleyGenesis {
-	logger := log.InitializeLogger()
 	ShelleyGenesis := &ShelleyGenesis{}
 	data, err := os.ReadFile(cfg.ShelleyGenesisFilePath)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
 	}
 	err = json.Unmarshal(data, ShelleyGenesis)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "GetEpochLength", err)
 	}
 
 	return ShelleyGenesis
 }
 
 func (leader Leader) GetLeaderPath(epoch int) string {
-	logger := log.InitializeLogger()
-	logger.Infow("GetLeaderPath", "directory", leader.Directory, "prefix", leader.Prefix, "epoch", epoch, "extension", leader.Extension)
+	log.Infow("GetLeaderPath", "directory", leader.Directory, "prefix", leader.Prefix, "epoch", epoch, "extension", leader.Extension)
 	return fmt.Sprintf("%s/%s%d%s", leader.Directory, leader.Prefix, epoch, leader.Extension)
 }

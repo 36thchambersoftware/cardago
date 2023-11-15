@@ -9,10 +9,9 @@ import (
 )
 
 func NotifyChannel(config Config, content string) {
-	logger := log.InitializeLogger()
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
 	}
 
 	message := discordgo.MessageSend{
@@ -20,16 +19,15 @@ func NotifyChannel(config Config, content string) {
 	}
 	response, err := discord.ChannelMessageSendComplex(config.ChannelID, &message)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ChannelMessageSend", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ChannelMessageSend", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
+	log.Infow("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", response)
 }
 
 func ScheduleEvent(config Config, name string, start time.Time, end time.Time, content string) {
-	logger := log.InitializeLogger()
 	discord, err := discordgo.New(config.AuthenticationToken)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "ERROR", err)
 	}
 
 	startDate := start
@@ -47,7 +45,7 @@ func ScheduleEvent(config Config, name string, start time.Time, end time.Time, c
 
 	st, err := discord.GuildScheduledEventCreate(config.ServerID, &event)
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "DISCORD", "GuildScheduledEventParams", err)
+		log.Errorw("CARDAGO", "PACKAGE", "DISCORD", "GuildScheduledEventParams", err)
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", st)
+	log.Infow("CARDAGO", "PACKAGE", "DISCORD", "MESSAGE", st)
 }

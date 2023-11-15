@@ -10,22 +10,21 @@ import (
 )
 
 func main() {
-	logger := log.InitializeLogger()
 	config := config.Get()
 	err := config.LoadConfig()
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return
 	}
-	logger.Infow("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
+	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
 
 	tip, err := cardano.QueryTip()
 	if err != nil {
-		logger.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
 		return
 	}
 
-	logger.Infow("CARDAGO", "PACKAGE", "CARDANO", "SYNCPROGRESS", tip.SyncProgress)
+	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "SYNCPROGRESS", tip.SyncProgress)
 
 	message := fmt.Sprintf("<@%s> SYNC PROGRESS: %s", config.Discord.UserID, tip.SyncProgress)
 
