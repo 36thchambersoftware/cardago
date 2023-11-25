@@ -14,7 +14,6 @@ type Config struct {
 	Cardano cardano.Config `yaml:"cardano"`
 	Leader  cardano.Leader `yaml:"leader"`
 	Discord discord.Config `yaml:"discord"`
-	Log     log.Log        `yaml:"log"`
 }
 
 /**
@@ -48,10 +47,10 @@ func (cfg *Config) LoadConfig() error {
 	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
 
 	// Check if the leader log directory exists.
-	_, err = os.Stat(cfg.Leader.Directory)
+	_, err = os.Stat(cfg.Cardano.Leader.Directory)
 	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", err)
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Log.Leader.Directory", cfg.Leader)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", cfg.Leader)
 
 		return err
 	}

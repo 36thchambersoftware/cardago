@@ -6,7 +6,7 @@ Golang solutions for Cardano stake pools.
 
 Currently there are 3 features.
 
-1. blocksthisepoch is a command that will use your pool info to check for scheduled blocks in the next epoch. This is designed to be used as part of a cron that will check on a regular basis. Common blockers to this command running would be your pool being out of sync, you're using the wrong shelley-genesis file, the epoch isn't yet 75% complete, or the command has already run successfully for the next epoch (meaning a log file has already been created for the next epoch)
+1. scheduledblocks is a command that will use your pool info to check for scheduled blocks in the next epoch. This is designed to be used as part of a cron that will check on a regular basis. Common blockers to this command running would be your pool being out of sync, you're using the wrong shelley-genesis file, the epoch isn't yet 75% complete, or the command has already run successfully for the next epoch (meaning a log file has already been created for the next epoch)
 2. kesperiodinfo is for alerting you when your kes key rotation needs to be completed by.
 3. syncprogress is ideal for alerting a discord server that your block producer is online and fully synced. This is a way to give delegators/discord members peace of mind that the pool is up and running.
 
@@ -21,7 +21,7 @@ Clone the project
 Go to desired command directory
 
 ```bash
-  cd cardago/cmd/blocksthisepoch
+  cd cardago/cmd/scheduledblocks
 ```
 
 Create the binary for your system (Linux shown, though this is a good resource https://freshman.tech/snippets/go/cross-compile-go-programs/)
@@ -51,7 +51,7 @@ discord:
 Run the program
 
 ```bash
-  ./blocksthisepoch
+  ./scheduledblocks
 ```
 
 ## Acknowledgements

@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type Log struct {
@@ -15,6 +16,7 @@ var logger *zap.SugaredLogger
 func init() {
 	config := zap.NewProductionConfig()
 	config.OutputPaths = []string{"cardago.log"}
+	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	zapper, err := config.Build()
 	if err != nil {
 		slog.Error("could not initialize config", "ERROR", err)
