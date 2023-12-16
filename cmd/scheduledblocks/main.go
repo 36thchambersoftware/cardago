@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"cardano/cardago/internal/cardano"
 	"cardano/cardago/internal/config"
@@ -20,7 +21,29 @@ func main() {
 		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "ERROR", err)
 		return
 	}
+	// Check if the Cardano Shelley genesis file path exists.
+	_, err = os.Stat(cfg.Cardano.ShelleyGenesisFilePath)
+	if err != nil {
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.ShelleyGenesisFilePath", err)
+		return
+	}
+
+	// Check if the Cardano VRFS key file path exists.
+	_, err = os.Stat(cfg.Cardano.VRFSKeyFilePath)
+	if err != nil {
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.VRFSKeyFilePath", err)
+		return
+	}
 	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", cfg)
+
+	// Check if the leader log directory exists.
+	_, err = os.Stat(cfg.Cardano.Leader.Directory)
+	if err != nil {
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", err)
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", cfg.Leader)
+
+		return
+	}
 
 	// Get the scheduled Cardano blocks.
 	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano)

@@ -1,2 +1,5 @@
 config.yaml
 .vscode
+*.log
+Makefile
+*.bin

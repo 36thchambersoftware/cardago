@@ -1,19 +1,19 @@
 package config
 
 import (
-	"os"
-
 	"cardano/cardago/internal/cardano"
 	"cardano/cardago/internal/discord"
 	"cardano/cardago/internal/log"
+	"cardano/cardago/pkg/blockfrost"
 
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Cardano cardano.Config `yaml:"cardano"`
-	Leader  cardano.Leader `yaml:"leader"`
-	Discord discord.Config `yaml:"discord"`
+	Cardano    cardano.Config    `yaml:"cardano"`
+	Leader     cardano.Leader    `yaml:"leader"`
+	Discord    discord.Config    `yaml:"discord"`
+	Blockfrost blockfrost.Config `yaml:"blockfrost"`
 }
 
 /**
@@ -45,36 +45,6 @@ func (cfg *Config) LoadConfig() error {
 		return err
 	}
 	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "viper config", cfg)
-
-	// Check if the leader log directory exists.
-	_, err = os.Stat(cfg.Cardano.Leader.Directory)
-	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", err)
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.Leader.Directory", cfg.Leader)
-
-		return err
-	}
-
-	// Check if the Cardano node certificate path exists.
-	_, err = os.Stat(cfg.Cardano.NodeCertPath)
-	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.NodeCertPath", err)
-		return err
-	}
-
-	// Check if the Cardano Shelley genesis file path exists.
-	_, err = os.Stat(cfg.Cardano.ShelleyGenesisFilePath)
-	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.ShelleyGenesisFilePath", err)
-		return err
-	}
-
-	// Check if the Cardano VRFS key file path exists.
-	_, err = os.Stat(cfg.Cardano.VRFSKeyFilePath)
-	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.VRFSKeyFilePath", err)
-		return err
-	}
 
 	// Return nil to indicate that the configuration was loaded successfully.
 	return err

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"cardano/cardago/internal/cardano"
@@ -18,6 +19,13 @@ func main() {
 		return
 	}
 	log.Debugw("CARDAGO", "PACKAGE", "CONFIG", "RUNTIME", config)
+
+	// Check if the Cardano node certificate path exists.
+	_, err = os.Stat(config.Cardano.NodeCertPath)
+	if err != nil {
+		log.Errorw("CARDAGO", "PACKAGE", "CONFIG", "Cardano.NodeCertPath", err)
+		return
+	}
 
 	KESPeriodInfo, err := cardano.GetKESPeriodInfo(config.Cardano.NodeCertPath)
 	if err != nil {
