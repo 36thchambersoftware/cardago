@@ -15,6 +15,13 @@ type ScheduledBlock struct {
 	SlotNumber int64
 }
 
+var (
+	ErrorEpochAlreadyChecked = errors.New("epoch already checked")
+	ErrorOutOfSync           = errors.New("sync progress is less than 100 - wait for full sync")
+	ErrorEpochLength         = errors.New("epoch length incorrect - check shelley genesis file")
+	ErrorTooEarly            = errors.New("too early to check")
+)
+
 func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "ACTION", "GetScheduledBlocks")
 	scheduledBlocks := []ScheduledBlock{}
@@ -25,19 +32,19 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	}
 
 	if tip.SyncProgress != "100.00" {
-		return []ScheduledBlock{}, errors.New("sync progress is less than 100 - wait for full sync")
+		return []ScheduledBlock{}, ErrorOutOfSync
 	}
 
 	epochLength := cfg.GetShelleyGenesis().EpochLength
 	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "EPOCHLENGTH", epochLength)
 	if epochLength < 1 {
-		return []ScheduledBlock{}, errors.New("epoch length incorrect - check shelley genesis file")
+		return []ScheduledBlock{}, ErrorEpochLength
 	}
 
 	epochProgress := float32(tip.SlotInEpoch) / float32(epochLength)
 	log.Infow("CARDAGO", "PACKAGE", "CARDANO", "Epoch progress", epochProgress)
 	if epochProgress < 0.75 {
-		return []ScheduledBlock{}, errors.New("too early to check")
+		return []ScheduledBlock{}, ErrorTooEarly
 	}
 
 	nextEpoch := tip.Epoch + 1
@@ -49,7 +56,7 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 	if !doesNotExist {
 		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "name", existingLogFile.Name(), "modified", existingLogFile.ModTime())
 		log.Infow("CARDAGO", "PACKAGE", "CARDANO", "epoch already checked", nextEpoch)
-		return scheduledBlocks, errors.New("epoch already checked")
+		return scheduledBlocks, ErrorEpochAlreadyChecked
 	}
 
 	args := []string{
@@ -99,7 +106,7 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 			return scheduledBlocks, err
 		}
 
-		if len(pieces) != 2 {
+		if len(pieces) != 4 {
 			log.Infow("CARDAGO", "PACKAGE", "CARDANO", "pieces mismatch", "check output")
 			return scheduledBlocks, err
 		}
@@ -107,15 +114,19 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 		slotNumber, errIntParse := strconv.ParseInt(pieces[0], 10, 64) // e.g. 97470387
 		if errIntParse != nil {
 			log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errIntParse)
+			return scheduledBlocks, err
 		}
 
-		slotTime, errTimeParse := time.Parse("2006-01-02T15:04:05Z", pieces[1])
+		slotTime, errTimeParse := time.Parse("2006-01-02 15:04:05 MST", strings.Join(pieces[1:], " "))
 		if errTimeParse != nil {
 			log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", errTimeParse)
+			return scheduledBlocks, err
 		}
 
+		local, _ := time.LoadLocation("America/Chicago")
+
 		scheduledBlock.SlotNumber = slotNumber
-		scheduledBlock.Datetime = slotTime
+		scheduledBlock.Datetime = slotTime.In(local)
 
 		scheduledBlocks = append(scheduledBlocks, scheduledBlock)
 	}
@@ -154,4 +165,13 @@ func logScheduledBlocks(logs Leader, nextEpoch int, content []byte) error {
 
 	// Return nil to indicate that the scheduled Cardano blocks were logged successfully.
 	return err
+}
+
+func ReadScheduledBlocks(logs Leader) ([]byte, error) {
+	tip, err := QueryTip()
+	if err != nil {
+		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		return []byte{}, err
+	}
+	return os.ReadFile(logs.GetLeaderPath(tip.Epoch + 1))
 }

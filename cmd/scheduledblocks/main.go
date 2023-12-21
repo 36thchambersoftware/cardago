@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -49,6 +50,15 @@ func main() {
 	scheduledBlocks, err := cardano.GetScheduledBlocks(cfg.Cardano)
 	if err != nil {
 		log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", err)
+		if errors.Is(err, cardano.ErrorEpochAlreadyChecked) {
+			data, readErr := cardano.ReadScheduledBlocks(cfg.Cardano.Leader)
+			if readErr != nil {
+				log.Errorw("CARDAGO", "PACKAGE", "CARDANO", "ERROR", readErr)
+				return
+			}
+
+			discord.ExecuteWebhook(cfg.Discord, string(data))
+		}
 		return
 	}
 
