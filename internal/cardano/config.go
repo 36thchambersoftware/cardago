@@ -18,6 +18,7 @@ type Config struct {
 	StakePoolID            string `yaml:"stakepoolid"`
 	VRFSKeyFilePath        string `yaml:"vrfskeyfilepath"`
 	Leader                 Leader `yaml:"leader"`
+	Bech32PoolId           string `yaml:"bech32poolid"`
 }
 
 type Leader struct {
