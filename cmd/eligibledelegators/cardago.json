@@ -1,0 +1,821 @@
+[
+    {
+        "Addresses": {
+            "address": "addr1q8gxyt9gmupvhzmaxrdme2cwe92j6zzqmq9k0l8zzj4exg89z8y86wyfkunulmzy9nc7xwgz9mxqzhfkgtwaz68vvp7qtr26wa"
+        },
+        "StakeAddress": "stake1u8j3rjra8zymwf70a3zzeu0r8ypzanqpt5my9hw3drkxqlqd3te60",
+        "PoolID": "",
+        "LiveStake": 5055645367,
+        "EpochLoyalty": 20,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 4995642158,
+        "ActiveEpoch": 452,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8mek9du9welegcr08r6q42cm2e5crq9ht97x7esagzawrprp56eewa6lgtlvjy6q0u2fmj5mnla6wa76ta4r5l6sk6q5q7ul9"
+        },
+        "StakeAddress": "stake1uy3s6dvuhwa059lkfzdq879yae2del7a8wld976360agtdqjaplfd",
+        "PoolID": "",
+        "LiveStake": 6694896957,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 70185765,
+        "ActiveEpoch": 454,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qx57naz9d70039j4l0j6hcgxtj75lk6ngycr3wgpj7uv6ydsxrnud2m7629lsx7wz63s2wqp0r7y7xrvwku76798ex2qmj2c7h"
+        },
+        "StakeAddress": "stake1uxcrpe7x4dld9zlcr08pdgc98qqh3lz0rpk8tw0d0znun9qvfrrn4",
+        "PoolID": "",
+        "LiveStake": 541936589,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 381937369,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyqdvd3lrtmdyhe8rmmj8wm2s3w25rldarhdeh8d0ej9sxml9r7la27s9g8lwtaeutdwfr75gp7vm34g98jthqrujdmq05amrm"
+        },
+        "StakeAddress": "stake1u9lj3l0740gz5rlh97u79khy3l2yqlxdc65zne9msp7fxas2tsgfk",
+        "PoolID": "",
+        "LiveStake": 3367798298,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 3244336107,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8e69zlsfye3h539p0vd36kdr2rlyx2pzamyeyh38teusf3h6vmvpzy2gs7clml25qq5g7n2d2pcu7jjcrd2n42ynp6q32kafq"
+        },
+        "StakeAddress": "stake1uymaxdkq3z9yg0v0al42qq2y0f4x4quw0ffvpk4f64zfsaqxakflh",
+        "PoolID": "",
+        "LiveStake": 1627503922,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 7811399,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxp8hhhu82hqh9z8hayfhet6efgcy2v5tzamruqp5c6x76qmcvwl32rl3fu9qdjkmvuvjjglrqdvr50djwcfcfxllpwqndkkfl"
+        },
+        "StakeAddress": "stake1uydux80c4plc57zsxetdkwxffy03sxkp68ke8vyuyn0lshqs4qhta",
+        "PoolID": "",
+        "LiveStake": 23671343888,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 10153912945,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxhgn4eqt77me4etpdey60j6jep44ll2ldw6qukyf0qgfg3tyg5mxf0u8eaeq9tqja8gcxajkj8gwc59mdszp49xsakqnn0w8g"
+        },
+        "StakeAddress": "stake1uy4jy2dnyh7ru7usz4sfwn5vrwetfr58v2zakcpq6jngwmqnn222v",
+        "PoolID": "",
+        "LiveStake": 1205058361,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1095670524,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxppmxuff5r29ekjl7ejtmcd3s4jy09rrk296en7774prelf0w77sxuxwfhlr4evw7v5pfdf0j7cuyexk8609raxklrs0td8qh"
+        },
+        "StakeAddress": "stake1u85hh00grwr8yml36uk80x2q5k5he0vwzvntra8j37nt03c9evt6q",
+        "PoolID": "",
+        "LiveStake": 5977781772,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 7318724,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9e7vmdc7n0aq7ht6s3ntmglnckuu2ey5q09qahu2tx43kmwkr6x3wnsffy7g50s3uvg3z7p9ra7fvg374078hljfsfqk74p54"
+        },
+        "StakeAddress": "stake1u9htparghfcy5j0y28cg7xyg30qj37lykygl2hlrmleycyspzt92v",
+        "PoolID": "",
+        "LiveStake": 98848504808,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 50000000000,
+        "InitialAmount": 21079365858,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8g8ngck2nhlg8eyahcaqhhfe0fn2un5zy8hawv77zzqtcp58890dvyfc5sxejpcjcvhvrvnnpn3m6ytldtx6kc5l8cqtfvzjc"
+        },
+        "StakeAddress": "stake1uy6rnjhkkzyu2grvequfvxtkpkfesecaaz9lk4ndtv20nuqa9aruw",
+        "PoolID": "",
+        "LiveStake": 45644382531,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 1599601360,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9zwlyduw9d3tpmjlpvfp0sc9nngm44g4mls79ypxraudevfrfhdp2m8gqpu5ymkkcuvfsxkylaghj6k4yrngwkmrmkqxsepz8"
+        },
+        "StakeAddress": "stake1uxy35mks4dn5qq72zdmtvwxycrtz075tedt2jpe58td3amqyndqk2",
+        "PoolID": "",
+        "LiveStake": 32159624444,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 44155785392,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8t7g0n34c38ggq580q8fnxla8rzf6r3ek5y4x488tuqmrzaxejf5vs8hjm6fj6uggssh72tejj93helj9wxm400u5jq7g837e"
+        },
+        "StakeAddress": "stake1u9wnvey6xgrmedayedwyyggtl99uefzcmulezhrd6hh72fqsyuq3s",
+        "PoolID": "",
+        "LiveStake": 2060356066,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 2044026738,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyrse2s5y6g460dyc04a54f6jwpa2dk6p232al09dvsg4zdw0aa03s83jay6rjf77zxku926tnjp803uhd537vgw4gls2ydp3e"
+        },
+        "StakeAddress": "stake1uxh877hccrcewjdpeyl0prtwz4d9eeqnhc7tk6glxy8250cqj9p2g",
+        "PoolID": "",
+        "LiveStake": 2983680306,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 8067346774,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8autpaw05dc0wmqafmw5kxsh2zjz44r90e0zf0yvh32zct4n30mwrmx6nw9w45ywmdd3m5ehkw783uxk4dcg6e54uzs86lj4g"
+        },
+        "StakeAddress": "stake1u96echahpandfhzh26z8dkkca6vmm80rc7rt2kuydv627pg7d6978",
+        "PoolID": "",
+        "LiveStake": 32961497495,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 30718287225,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxwvxk7yj8a67dn4r6cmked78e02j8effl23wqpp2mfwmc87pj9wu78u2ujtdgkpg7mvsrvq9ce4q632n8wkh8w7s7fsdhdjxu"
+        },
+        "StakeAddress": "stake1u8lqezhw0r79wf9k5tq50dkgpkqzuv6sdg4fnhttnh0g0ycdygtzv",
+        "PoolID": "",
+        "LiveStake": 15212097277,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 27465688,
+        "ActiveEpoch": 455,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyqpz59cgkahckv5fzdrzqcqrecn62pvjh06aqvrkewe5huzll7qs0nk5ttuysnlpkqyacdvyleayxvf82c6gjcdklcq8rvsyv"
+        },
+        "StakeAddress": "stake1uxp0llqg8em2947zgflsmqzwuxkz0u7jrxyn4vdyfvxm0uqnr39z2",
+        "PoolID": "",
+        "LiveStake": 8403767290,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 544915361,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8mg8q2858xenzgz6hy6x0add7arqxuym56dj3q8rvcu80zxcv4cgl8prcyk238m2cv0804zc30a3l6mjs9ey7n5l34sazpkcl"
+        },
+        "StakeAddress": "stake1u9rvx2uy0ns3uzt9gna4vx8nh63vgh7cladegzuj0f60c6cxkuxqj",
+        "PoolID": "",
+        "LiveStake": 1793219415,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1720283593,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9cat3r3hs9zucyu47g8ctsdru5v8zzpf9pa2k7t8lxlcv2j58ez4akjrunz26f07n3avv20xtdt4w6v8n2dskap420saev5ng"
+        },
+        "StakeAddress": "stake1u9f2ru327mfp7f39dyhlfc7kx98n9k46hdxre4xctws648cmnufdx",
+        "PoolID": "",
+        "LiveStake": 42732408470,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 18078697893,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxc7n52z7dmh6z06uu5gws02vj8dz3fh5zw6a2f7n05h9hsqm9nfa2rmjdfztazfartvtznhshnhyf9p25rqqxdl943s7fvu80"
+        },
+        "StakeAddress": "stake1uyqdje574paex53973y734k93fmctemjyjs42psqrxlj6ccvkh3la",
+        "PoolID": "",
+        "LiveStake": 4466079533,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 47652938,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9qstklk9swzrwc8x2l9d83kx0uxfsydhxy2y87lc99vznv0yfzk2twvw8ye8jt7rylmlj7vmzz4732f29csrup8cues7k4sqs"
+        },
+        "StakeAddress": "stake1ux8jy3t99hx8rjvne9lpj0ale0xd3p2lg4y4zugp7qnuwvcm2w4rl",
+        "PoolID": "",
+        "LiveStake": 762246832,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 569055105,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyhna37m63tazt33sy67xcwnuvzsehvn3xyp2q7zuaxcm7s62taks3cu3v897k6nfvtkl7ca0ad6zgg6xlzz88y5kq0qz4l4qt"
+        },
+        "StakeAddress": "stake1uyd997mgguwgkrjltdf5k9m0lvwh7kapyydr03prnj2tq8sk985ck",
+        "PoolID": "",
+        "LiveStake": 11351944840,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 10472468538,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8dprahj6wfj67a606pwk455pjmgukhfxkwhymyu94dg9au8c6qzxjvpgltznxkdkmckk33599fq2uvrhwxu7gl9vvnqdz6d99"
+        },
+        "StakeAddress": "stake1uxrudqprfxq5043fntxmduttgc6zj5s9wxpmhrw0y0jkxfsfjqedq",
+        "PoolID": "",
+        "LiveStake": 7419337884,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 46765471,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q97h7532ga3ffvnnhg9lhx89h8le3smq6ae5094m3x3msn7e8a570j5pls8s82tqkwsngjyl24xmepzf0k3cv8s9kz8qdzpzl4"
+        },
+        "StakeAddress": "stake1u8vn7608e2qlcrcr49st8gf5fz042ndus3yhmguxrczmprsnfujne",
+        "PoolID": "",
+        "LiveStake": 3763756928,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 99962169,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyhqvykfaxwxgglumx4xhjwvpq8auqchq0gtsxe0c07qqe74lzxdpezgatnarmfezrmcsl9gx4qw6994mrgpe0ajw0ws6g2nvx"
+        },
+        "StakeAddress": "stake1u82l3rxsu3yw4e73a5u3paug0j5r2s8dzj6a35quh7e88hgcpzf64",
+        "PoolID": "",
+        "LiveStake": 2129786015,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 2104459935,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9jc4ptrljwjyv92arfrrzu3u2xgz5xgqv4l0g0e5gz6wa5f506za5l9ltlqcgwr6gqpg040v8ju2qmfrztk0ktehhfs8h8l8r"
+        },
+        "StakeAddress": "stake1uxy68apw60jl4lsvy8payqq586hkrew9qd5339m8m9umm5cx3060q",
+        "PoolID": "",
+        "LiveStake": 1478239100,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 841568741,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8x57hurtsx4epxdxa36clsss423c3f02dt6ur5083w9z4m3r3qthr9dwd8lu84jrgpxlvedflj0jtg2n9erlkpkp3ss39v949"
+        },
+        "StakeAddress": "stake1u9c3cs9m3jkhxnl7r6ep5qn0kvk5le8e959fju3lmqmqccgjncaw9",
+        "PoolID": "",
+        "LiveStake": 4370508396,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 82809075,
+        "ActiveEpoch": 456,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8wwpt8yy2wgxvqs6rggquvlyr3h3evxe44t4ptl9ra5t58c75urpgx0vluq4w68m2kt0vg3qfn6u98nurlrl50l9h9sf350nu"
+        },
+        "StakeAddress": "stake1u8u02wps5r8k07q2hdra4t9hkygsyeawzne7pl3l68ljmjc2rhsvl",
+        "PoolID": "",
+        "LiveStake": 3191963421,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 2951611082,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qywjz0nkfrl6r5hnezgk9ke2gw4g5u2sl0yuusu8vcj92mpgelau0d6udcgn7ffs5kmnq9s9ayzgrxyglula3gx2udvq3v5rem"
+        },
+        "StakeAddress": "stake1uy5vl778kawxuyfly5c2tdeszcz7jpypnzy0707c5r9wxkqantn0h",
+        "PoolID": "",
+        "LiveStake": 5080757556,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 207327151,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qx2x59kuh4sdacx8p0z38r5ew04xnnayfmu6d7uar49adsag8qsqwuh657lkje6w9j0t952sdf33mtfw3z50qcfpmj2qz54stn"
+        },
+        "StakeAddress": "stake1ux5rsgq8wta200mfva8ze84j69gx5cca45hg328svysae9qwughmf",
+        "PoolID": "",
+        "LiveStake": 3513314141,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 9841979,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyd6yhx2dshg6sqgakn5jxlvk6q7hhceg4l2anvcapl65hsdhftas2zcdcsxwjffvhkckwnr64zuyrha9y29wsu6wmfqzef3zq"
+        },
+        "StakeAddress": "stake1uyxm547c9pvxugr8fy5ktmvt8f3a23wzpm7jj9zhgwd8d5ssgg59y",
+        "PoolID": "",
+        "LiveStake": 8356420841,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 2998812895,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qy02zdpjzfrhapegfysk26tc5xcr6edc2mkdh45y4vas3pevl95jdz3h8yyk4r9ccgk7zdys4lfzmz7u87d2752xk6js2drq2z"
+        },
+        "StakeAddress": "stake1uyk0j6fx3gmnjzt23juvyt0pxjg2l53d30wrlx4029rtdfgpc3sw8",
+        "PoolID": "",
+        "LiveStake": 98661758815,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 50000000000,
+        "InitialAmount": 255817225,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9mxutms6amm0ktl4wh7d4e86qs6drc9dsdc79l7y6vrrp87qa0rfycjshwlsyg30zxzhutxwhydw5y32pj0f98k58dsgq0uuk"
+        },
+        "StakeAddress": "stake1u8lqwh35jvfgth0czygh3rpt79n8tjxh2zg4qe85jnm2rkcz9ag99",
+        "PoolID": "",
+        "LiveStake": 1342305114,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1330260575,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q953m43p39rlskd04367xucz5ezsdfam3m6npskm566rt8qa4afy7ymurpzfhzg3er6mmsvw34kvddypu3unkxzk4j2q32zadn"
+        },
+        "StakeAddress": "stake1uyw675j0zd7ps3ym3ygu3adacx8g6mxxkjq7g7fmrpt2e9qyjfy4y",
+        "PoolID": "",
+        "LiveStake": 659880191,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 194217042,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9unk3fxc4yqxv7a66gm4sqf0spn8fxafr8pcu05ulqn780pezw2xekd8wr3zkrthp2kg23c34u66vpz89cg606u0rqs9nnena"
+        },
+        "StakeAddress": "stake1u8su389rvmxnhpc3tp4ms4ty9gug67ddxq3rjuyd8aw83sg9sga8m",
+        "PoolID": "",
+        "LiveStake": 1290019158,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1246758865,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8kd862kwgwkn2aqzv75fs9pfnczydwj69ndnvcwk3fsy7gfugv7u8pkkqcj7mqg8z2ct3eylyd3k8pc7yh3cye3czasuln000"
+        },
+        "StakeAddress": "stake1uyy7yx0wrsmtqvf0dsyr39v9cuj0jxcmrsu0ztcuzvcupwcxgfxz2",
+        "PoolID": "",
+        "LiveStake": 1210069765,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1079052366,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8dmv0pdhdwjmsvfa9z093nj8553g206nze7x3c9rxhy2umndx3mh03vvg3nf7gthdk6vcdhs3sgmaj330fxllmuq96qwx8dju"
+        },
+        "StakeAddress": "stake1u9ekngamhckxyge5ly9mkmdxvxmcgcyd7egch5n0la7qzaqe9y2y0",
+        "PoolID": "",
+        "LiveStake": 12480018410,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 12386899875,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxujey8f9ma3mjr0d5s6p5ngw5atxts93q0nfv2tlef8fzm6a55nwamkryy65qyz3hxsuv276y3gp29wlexnmyj3w38sux9jcp"
+        },
+        "StakeAddress": "stake1u9aw62fhwampjzd2qzpgmngwx90dzg5q4zh0unfajfghgncv397yn",
+        "PoolID": "",
+        "LiveStake": 10050681537,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 9998235018,
+        "ActiveEpoch": 457,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qx98dxvjgjnyvhl248w6tgzwradyhf5punz67y82aec0xhzg8ag23jxuhz58ac28zunusqc02jy6th5t58ezm9whwm9s84tqmw"
+        },
+        "StakeAddress": "stake1u9yr759gerwt32r7u9r3wf7gqv84fzd9m696ru3djhthdjcxsdx28",
+        "PoolID": "",
+        "LiveStake": 819998537,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 1099827195,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyrc2jjzd9h0drmtgshxlumpx077pwg5t7aga5c3r39n664974ly4hqjc5lvs8xk8f7f07lj7qw6qzd09s9zd2rlrrxqtqzy9y"
+        },
+        "StakeAddress": "stake1uxjl2lj2msfv20kgrntr5lyhl0e0q8dqpxhjcz3x4pl33nqpflwpp",
+        "PoolID": "",
+        "LiveStake": 3373672219,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 380199763,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9njlx6m2q8x2ncg5a9pyx6mjhkaxvcp99uj97rrqkzllnshmehara5jnv6z9wypd9tqfpeqgvujq7twgam4ssuwkjzsfa5q0p"
+        },
+        "StakeAddress": "stake1uytaum7376ffkdpzhzqkj4sysusyxwfq09hywa6cgw8tfpgca9gml",
+        "PoolID": "",
+        "LiveStake": 12976463816,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 499812895,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8k4h47sgrpw2cxq3qwfxrs5qclgrasl9pe6krtqpkv6hzac43cvf0jl7pchtsksmszr60k6ugrc577gzy8c88f805mshzdulz"
+        },
+        "StakeAddress": "stake1uxu2cuxyhe0lqut4ctgdcppa8mdwypu200ypzrurn5nh6dcltq2qn",
+        "PoolID": "",
+        "LiveStake": 790410755,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 200465877,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxpz4xzel08nqgwg2qufun5am6y3dk7vh45czp8kcjwuz7gljjtpxnx5qjmrnwt7rsvch5cwdtdvkfauyg6u8c0lrpaqy6u9ct"
+        },
+        "StakeAddress": "stake1uy0ef9snfn2qfd3eh9lpcxvt6v8x4kkty77zydwru8l3s7spu9d40",
+        "PoolID": "",
+        "LiveStake": 2052230373,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 665706396,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qydnyd9jjym4sdxwut65hupwy3qfh7agmyu0l9zvs2gr50z63e26wqukv9uj799cuu2tlv29cw830jxqnzhceep6l59sdy8zas"
+        },
+        "StakeAddress": "stake1u9dgu4d8qwtxz7f0zjuww99lk9zu8rcherqf3tuvusa06zcej40h3",
+        "PoolID": "",
+        "LiveStake": 11675238703,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 160466855,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxdhclr9ax6jkdac7yh0xw3kh28xz4vadpw5r3ce3vvn8qzsdnvt05vpmdhkcj732vpr2dcff27c4s3wqcxhzj4sracqg67dww"
+        },
+        "StakeAddress": "stake1u9gxek9h6xqakmmvf0g4xq34xuy540v2cghqvrt3f2cp7uqa2ka78",
+        "PoolID": "",
+        "LiveStake": 578380327,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 297228594,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxkelz5m9hlass8pypu5g3psda9gdghtndpkuf27z9r2j4c2m90utzp93ncakm9r8eyjr600f7kfh9q5h8gp08934wcqadaz4a"
+        },
+        "StakeAddress": "stake1uy9djh793qjceuwmdj3nujfpa8h5ltymjs2tn5qhnjc6hvqnfjzcu",
+        "PoolID": "",
+        "LiveStake": 2676153591,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 8827195,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q95033suxjvz43zhjrs43ut86azucl67ayjeee8l72mawwk7k7esuj4axg7a05nptlwxz7m70k6awrzn74q24pxzqw8qza7pq9"
+        },
+        "StakeAddress": "stake1u80t0vcwf27ny0wh6fs4lhrp0dl8mdwhp3fl2s92snpq8rsygthkl",
+        "PoolID": "",
+        "LiveStake": 5470436883,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 198019671,
+        "ActiveEpoch": 458,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8h3wjc6juzhle4czt7jfg48nmq4cr4v4x3296cna5szz4mpyptffj2muf602dj7phnct2mnhaet8hnmz8sd83tyl43sg320f6"
+        },
+        "StakeAddress": "stake1u9sjq455e9d7ya84xe0qmeu94dem7u4nmea3rcxnc4j06cc4uuvra",
+        "PoolID": "",
+        "LiveStake": 9524496670,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 190753377,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyegnvq4apq7l4dstewm6lphaeq98kgzv94yzx3hshrk60u8f8j92zp93feq2fwv9lu4rd246t4wc0n0l6438tmdhxzqwdxlxk"
+        },
+        "StakeAddress": "stake1uxr5nez4pqjc5us9yhxzl723k42a96hv8ehla2cn4akmnpq3r6nk3",
+        "PoolID": "",
+        "LiveStake": 3712938446,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 378387680,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9fvksturctthyhlar87svznw5yfwjpyymq4tr8jh2wpl69qv7e2ulc8ymfl0k66zz0s5v82gmsspxlum32ygsnh6pess88qt9"
+        },
+        "StakeAddress": "stake1uxsx0v4w0urjd5lhmddpp8c2xr4ydcgqn07dc4zygfmaquc8ctgns",
+        "PoolID": "",
+        "LiveStake": 1245131026,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 353855897,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9qdslar4umyswjahgjevvz8kfzjnz4y9g3hgfp5lr38zkp67s7djwak0h4ud8qhkvhwya65fnk5k8ll68n8glhqmdls8f6u3v"
+        },
+        "StakeAddress": "stake1uya0g0xe8wm8m67xnstmxthzwa2yem2trllaren50msdklcgscnuy",
+        "PoolID": "",
+        "LiveStake": 7351225183,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 2847186097,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q9y4kp3pers2w8dmym7220w2a3dq6my5r0hrj2sleduhrrwzs4qhv67dtuq47apljp2rds8erftylvspyhqqmxnq93ksaxw849"
+        },
+        "StakeAddress": "stake1u8pg2stkd0x47q2lwsleq4pkcru354j0kgqjtsqdnfszcmgfr0xr3",
+        "PoolID": "",
+        "LiveStake": 9050866740,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 1583784559,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qyra8zrvw397dkrswsxfes5qsjemwfht9h4pejxwre53gdn9605l3gh4u3lt8xv4t9s07wq7mxyl4aw4k7d7qd8v9kcs0dpz8z"
+        },
+        "StakeAddress": "stake1u9ja860c5t67gl4nnx24jc8l8q0dnz067h2m0xlqxnkzmvg895qaw",
+        "PoolID": "",
+        "LiveStake": 557822270,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 4652938,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxhd43a00z5mwp5sn33thuwcu0794uewej6lrmzjfwaljmpcrxfmhlc8ghpepgfnhdsur3en8sna8cl7rsxp5k0ee7fssvmwaq"
+        },
+        "StakeAddress": "stake1uyupnyamlur5tsus5yemkcwpcuencf7nu0lpcrq6t8uulycarpn07",
+        "PoolID": "",
+        "LiveStake": 3101221948,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 46652938,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxmw3g77lfaqfrtrl5nd85n7j8tth3e8yt9epgfs0clh9fh7n9gsdahs9ur9s3wfddmnhplep9jgw7u2cvm6jp0h8zlq9vwd7w"
+        },
+        "StakeAddress": "stake1u8lfj5gx7mcz7pjcghykkaemslusjey80w9vxdafqhmn30s42g622",
+        "PoolID": "",
+        "LiveStake": 8594347634,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 3614298482,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxj80x0nm5e69gvufkjct4vl0mnl9yqt6j74ejlly3k3xqn22x6wpsqsjjvmpf209xvc88lkcmk05t9frc0w5q00xffsd9aufz"
+        },
+        "StakeAddress": "stake1u949rd8qcqgffxds548jnxvrnlmvdm869j53u8h2q8hny5cw4rnan",
+        "PoolID": "",
+        "LiveStake": 2308818980,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 2290884463,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qy58t36krg7jgwuf6trtfg54yvzyspt43skcjcp4j353pwr8y2rh04thxpdxa95n23l5jc0srq8fn7s5e94p36vg9flskhk84f"
+        },
+        "StakeAddress": "stake1u9nj9pmh64mnqknwj6f4gl6fv8cpsr5elg2vj6scaxyz5lcjhtyyc",
+        "PoolID": "",
+        "LiveStake": 844852335,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 431465821,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qy4w72a55hyx2xwy2qm3jzfevv4t9nyjl6h4nt43vrr4du8a673rxv84wc3lrnxhu24mtq2d0ujn7dayksuuuamuer2s0uvhw8"
+        },
+        "StakeAddress": "stake1u87a0g3nxr6hvgl3ent792a4s9xh7fflx7jtgwwwwa7v34gegq30c",
+        "PoolID": "",
+        "LiveStake": 58971066407,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 50000000000,
+        "InitialAmount": 827827195,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8qd8wgkmlxmrrj7g7zkf5y0lj47m43dnnwh6m9jyl9rynafe872hzt2l7l6drlufvjmjtcn0cqdzkd73e9k3ml09hwqhvfs9d"
+        },
+        "StakeAddress": "stake1ux5unl9t3940l0ax3l7ykfde9ufhuqx3txlgujmgalhjmhqa30qrs",
+        "PoolID": "",
+        "LiveStake": 3045815222,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 79954214,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qx9gr57hw3syed96w2jezwn836qmza68w6spz2eppc9ddzu82thtsf4444rvp3hsad9h5qlwlh9y3pwte955hvaj8krq39u7y4"
+        },
+        "StakeAddress": "stake1uxr49m4cy66663kqcmcwkjm6q0h0mjjgsh9uj62tkwermpstpthrd",
+        "PoolID": "",
+        "LiveStake": 5106974460,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 654827195,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qynpzyu6pte8swtug4aj5cp9ezcmlwwx7h83avp9kum98x473mfc9maaxda55ltxspqu5wlpcekank5xs35hcat3r2fqna0w60"
+        },
+        "StakeAddress": "stake1uxlga5uza77nx76204ngqsw280suvmwem2rgg6tuw4c34ysslenyh",
+        "PoolID": "",
+        "LiveStake": 15909028191,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 1116908195,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1qxkztdc6gnwenr4l3s00p9m9krd4en9dnvep5meumzdg9d5sxeyagjwqzlhwzmrfjq3f45v5qpftgsyj9wwlzmse374qydtm5a"
+        },
+        "StakeAddress": "stake1uxgrvjw5f8qp0mhpd35eqg566x2qq545gzfzh803dcvcl2szuwvdf",
+        "PoolID": "",
+        "LiveStake": 20598869622,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 5000000000,
+        "InitialAmount": 99327195,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q8l3de9n9ddgs29u5lxhdvhz6c7t6h7h4wnuem8xusad9mmvegkh0rnscrds6zec8hjgy60lqtvdj9rjk7p7mtayaszq3z3wg3"
+        },
+        "StakeAddress": "stake1u9kv5tth3ecvpkcdpvurmeyzd8ls9kxez3et0qld47jwcpqpwacx0",
+        "PoolID": "",
+        "LiveStake": 641237092,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 523914234,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    },
+    {
+        "Addresses": {
+            "address": "addr1q87juhzthc9fwn07750gtxv2y24440gfxxzfx5swrksc4wnyfpup6g8r6sytfc8dnp837qx9fd7mu6lxd0ty8r0m59ws98we3a"
+        },
+        "StakeAddress": "stake1u9jys7qayr3agz95urkesnclqrz5kld7d0nxh4jr3ha6zhg4thgrd",
+        "PoolID": "",
+        "LiveStake": 620374905,
+        "EpochLoyalty": 10,
+        "StakeLoyalty": 500000000,
+        "InitialAmount": 617583103,
+        "ActiveEpoch": 459,
+        "CurrentEpoch": 472
+    }
+]

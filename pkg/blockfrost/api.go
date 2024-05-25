@@ -16,40 +16,46 @@ type Config struct {
 	Timeout   string `yaml:"timeout"`
 }
 
-func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string) ([]*preeb.Delegator, error) {
+func PoolDelegators(ctx context.Context, bfc bfg.APIClient, poolID string) ([]bfg.PoolDelegator, error) {
 	result, err := bfc.PoolDelegators(ctx, poolID, bfg.APIQueryParams{})
 	if err != nil {
 		log.Errorw("CARDAGO", "PACKAGE", "BLOCKFROST", "ERROR", err)
 		return nil, err
 	}
 
+	return result, nil
+}
+
+func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string) ([]*preeb.Delegator, error) {
 	delegators := []*preeb.Delegator{}
+
+	result, err := PoolDelegators(ctx, bfc, poolID)
+	if err != nil {
+		return nil, err
+	}
 
 	for _, v := range result {
 		delegator := preeb.Delegator{}
 		delegator.StakeAddress = v.Address
-		v, err := strconv.ParseUint(v.LiveStake, 10, 64)
+		liveStake, err := strconv.ParseUint(v.LiveStake, 10, 64)
 		if err != nil {
 			return nil, err
 		}
-		delegator.LiveStake = v
+		delegator.LiveStake = liveStake
+		delegator.LiveStakeADA = float64(delegator.LiveStake) / preeb.LovelaceToADA
 
-		// addresses, err := bfc.AccountAssociatedAddresses(ctx, v.Address, bfg.APIQueryParams{})
-		// if err != nil {
-		// 	return nil, err
-		// }
+		addresses, err := bfc.AccountAssociatedAddresses(ctx, v.Address, bfg.APIQueryParams{})
+		if err != nil {
+			return nil, err
+		}
 
-		// delegator.Address = addresses[0].Address
+		delegator.Addresses = addresses[0]
 		delegators = append(delegators, &delegator)
+		// delegator.Save()
 	}
 
 	return delegators, nil
 }
-
-type (
-	Address string
-	Epoch   int
-)
 
 func StakeAddressHistoryByEpoch(ctx context.Context, bfc bfg.APIClient, delegator *preeb.Delegator, poolID string, currentEpoch int) error {
 	delegationHistory, err := bfc.AccountDelegationHistory(ctx, string(delegator.StakeAddress), bfg.APIQueryParams{Order: "desc"})
@@ -57,6 +63,8 @@ func StakeAddressHistoryByEpoch(ctx context.Context, bfc bfg.APIClient, delegato
 		log.Errorw("BLOCKFROST", "GET", "AccountDelegation History", "ERROR", err)
 		return err
 	}
+
+	// log.Infow("CARDAGO", "PACKAGE", "BLOCKFROST", "DELEGATOR", delegator, "HISTORY", delegationHistory)
 
 	// take the first one - we got these addresses from known delegators, so 0 always exists.
 	if delegationHistory[0].PoolID == poolID {
@@ -68,11 +76,69 @@ func StakeAddressHistoryByEpoch(ctx context.Context, bfc bfg.APIClient, delegato
 		delegator.ActiveEpoch = delegationHistory[0].ActiveEpoch
 		delegator.CurrentEpoch = int32(currentEpoch)
 		delegator.InitialAmount = amount
+		delegator.InitialAmountADA = float64(delegator.InitialAmount) / preeb.LovelaceToADA
 
-		if (delegator.CurrentEpoch - delegator.ActiveEpoch) > 10 {
-			preeb.GetTiers(delegator)
-		}
+		preeb.GetTiers(delegator)
 	}
 
 	return nil
 }
+
+/**
+https://cardano-mainnet.blockfrost.io/api/v0/assets/2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b7345052454542353030412d3130452d30303031
+Asset:
+{
+    "asset": "2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b7345052454542353030412d3130452d30303031",
+    "policy_id": "2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b734",
+    "asset_name": "5052454542353030412d3130452d30303031",
+    "fingerprint": "asset12k454zzldch6n38aph8q0kpcurqcczh06yw2u9",
+    "quantity": "1",
+    "initial_mint_tx_hash": "8db2a8df36b20f048ed5fe5b29d70b819b48972560468f8ad79dab80d29954ce",
+    "mint_or_burn_count": 1,
+    "onchain_metadata": {
+        "name": "500A-10E-0001",
+        "files": [
+            {
+                "src": "ipfs://Qmat3Fnqe6M1pqM3KM5EAAHZN6d4tKBb1R7XGY7kwREkPW",
+                "name": "500A-10E-0001",
+                "mediaType": "image/png"
+            }
+        ],
+        "image": "ipfs://Qmat3Fnqe6M1pqM3KM5EAAHZN6d4tKBb1R7XGY7kwREkPW",
+        "Discord": "thepriebe",
+        "Twitter": "PREEBPool",
+        "Website": "https://preeb.cloud",
+        "mediaType": "image/png",
+        "description": "500A-10E"
+    },
+    "onchain_metadata_standard": "CIP25v1",
+    "onchain_metadata_extra": null,
+    "metadata": null
+}
+*/
+
+/**
+
+1. Get all assets from all policies
+https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b734
+policy: []assets
+[{"asset":"2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b7345052454542353030412d3130452d30303031","quantity":"1"},{"asset":"2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b7345052454542353030412d3130452d30303032","quantity":"1"}]
+policy1: asset1, asset2, assetn
+policy2: asset1, asset2, assetn
+policyn: assetn
+
+2. Get asset's addresses
+https://cardano-mainnet.blockfrost.io/api/v0/assets/2d73c7107e14b8cae9efa6d9794f1f4db5f0a5d23ad3147cb4c3b7345052454542353030412d3130452d30303031/addresses
+[{"address":"addr1","quantity":"1"},{"address":"addr2","quantity":"1"}]
+
+3.
+
+*/
+
+// func getAddressesByAssets(ctx context.Context, bfc bfg.APIClient, assets []string) {
+// 	assetsByAddress := []string{}
+// 	for i, a := range assets {
+// 		assetAddresses := bfc.AssetAddresses(ctx, a)
+// 	}
+
+// }
