@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"os"
 	"time"
 
 	"cardano/cardago/internal/config"
@@ -39,14 +41,20 @@ func main() {
 		log.Errorw("BLOCKFROST", "GET", "EpochLatest", "ERROR", err)
 	}
 
-	log.Infow("CARDAGO", "PACKAGE", "BLOCKFROST", "DELEGATORS", "BEGIN PROCESSING")
+	// log.Infow("CARDAGO", "PACKAGE", "BLOCKFROST", "DELEGATORS", "BEGIN PROCESSING")
 	for _, a := range delegatorAddresses {
 		blockfrost.StakeAddressHistoryByEpoch(ctx, bfc, a, cfg.Cardano.Bech32PoolId, ep.Epoch)
 	}
-	log.Infow("CARDAGO", "PACKAGE", "BLOCKFROST", "DELEGATORS", "END PROCESSING")
+	// log.Infow("CARDAGO", "PACKAGE", "BLOCKFROST", "DELEGATORS", "END PROCESSING")
 	// log.Infow("BLOCKFROST", "GET", "DELEGATORS", "DATA", delegatorAddresses)
+	delegators, _ := json.Marshal(delegatorAddresses)
+	os.WriteFile("current-delegators.json", delegators, os.ModePerm)
 
 	qualifiedDelegators := preeb.GetQualifiers(delegatorAddresses)
 
+	log.Infow("delegator", "count", len(qualifiedDelegators))
 	log.Infow("delegator", "addresses", qualifiedDelegators)
+
+	eligibleDelegators, _ := json.Marshal(qualifiedDelegators)
+	os.WriteFile("eligible-delegators.json", eligibleDelegators, os.ModePerm)
 }

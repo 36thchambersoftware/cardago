@@ -25,7 +25,7 @@ func GetKESPeriodInfo(opCertPath string) (KESPeriodInfo, error) {
 	log.Debugw("CARDAGO", "PACKAGE", "CARDANO", "PATH", opCertPath)
 
 	args := []string{
-		"query",
+		"conway", "query",
 		"kes-period-info",
 		"--mainnet",
 		"--op-cert-file",

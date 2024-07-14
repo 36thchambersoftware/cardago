@@ -22,7 +22,7 @@ func QueryTip() (Tip, error) {
 	tip := Tip{}
 
 	args := []string{
-		"query",
+		"conway", "query",
 		"tip",
 		"--mainnet",
 	}

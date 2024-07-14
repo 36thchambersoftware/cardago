@@ -17,22 +17,37 @@ type Config struct {
 }
 
 func PoolDelegators(ctx context.Context, bfc bfg.APIClient, poolID string) ([]bfg.PoolDelegator, error) {
-	result, err := bfc.PoolDelegators(ctx, poolID, bfg.APIQueryParams{})
-	if err != nil {
-		log.Errorw("CARDAGO", "PACKAGE", "BLOCKFROST", "ERROR", err)
-		return nil, err
-	}
+	count := 100
+	results := []bfg.PoolDelegator{}
+	page := 1
 
-	return result, nil
+	for count == 100 {
+		result, err := bfc.PoolDelegators(ctx, poolID, bfg.APIQueryParams{
+			Page: page,
+		})
+		if err != nil {
+			// log.Errorw("CARDAGO", "PACKAGE", "BLOCKFROST", "ERROR", err)
+			return nil, err
+		}
+		// log.Infow("BLOCKFROST", "GET", "DELEGATORS", "RESULT", result)
+		results = append(results, result...)
+		count = len(result)
+		page++
+		// log.Infow("BLOCKFROST", "GET", "DELEGATORS", "COUNT", len(result))
+	}
+	// log.Infow("BLOCKFROST", "GET", "DELEGATORS", "DATA", results)
+	return results, nil
 }
 
-func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string) ([]*preeb.Delegator, error) {
-	delegators := []*preeb.Delegator{}
-
+func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string) (map[string]*preeb.Delegator, error) {
 	result, err := PoolDelegators(ctx, bfc, poolID)
 	if err != nil {
 		return nil, err
 	}
+
+	// log.Infow("BLOCKFROST", "GET", "DELEGATORS", "COUNT", len(result))
+
+	data := make(map[string]*preeb.Delegator)
 
 	for _, v := range result {
 		delegator := preeb.Delegator{}
@@ -49,12 +64,13 @@ func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string
 			return nil, err
 		}
 
-		delegator.Addresses = addresses[0]
-		delegators = append(delegators, &delegator)
-		// delegator.Save()
+		delegator.Address = addresses[0].Address
+		data[v.Address] = &delegator
 	}
 
-	return delegators, nil
+	// log.Infow("DATA", "DELEGATORS", data)
+
+	return data, nil
 }
 
 func StakeAddressHistoryByEpoch(ctx context.Context, bfc bfg.APIClient, delegator *preeb.Delegator, poolID string, currentEpoch int) error {
@@ -75,6 +91,7 @@ func StakeAddressHistoryByEpoch(ctx context.Context, bfc bfg.APIClient, delegato
 
 		delegator.ActiveEpoch = delegationHistory[0].ActiveEpoch
 		delegator.CurrentEpoch = int32(currentEpoch)
+		delegator.EpochTotal = delegator.CurrentEpoch - delegator.ActiveEpoch
 		delegator.InitialAmount = amount
 		delegator.InitialAmountADA = float64(delegator.InitialAmount) / preeb.LovelaceToADA
 

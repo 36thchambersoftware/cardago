@@ -59,8 +59,9 @@ func GetScheduledBlocks(cfg Config) ([]ScheduledBlock, error) {
 		return scheduledBlocks, ErrorEpochAlreadyChecked
 	}
 
+
 	args := []string{
-		"query", "leadership-schedule",
+		"conway", "query", "leadership-schedule",
 		"--mainnet",
 		"--genesis", cfg.ShelleyGenesisFilePath,
 		"--stake-pool-id", cfg.StakePoolID,
