@@ -51,7 +51,7 @@ func GetTiers(delegator *Delegator) {
 
 func getEpochTier(delegator *Delegator) {
 	epochsDelegated := delegator.CurrentEpoch - delegator.ActiveEpoch
-	if epochsDelegated < 10 {
+	if epochsDelegated < EpochTier10 {
 		return
 	}
 

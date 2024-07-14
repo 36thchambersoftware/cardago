@@ -17,11 +17,14 @@ type Config struct {
 }
 
 func PoolDelegators(ctx context.Context, bfc bfg.APIClient, poolID string) ([]bfg.PoolDelegator, error) {
-	result, err := bfc.PoolDelegators(ctx, poolID, bfg.APIQueryParams{})
+	result, err := bfc.PoolDelegators(ctx, poolID, bfg.APIQueryParams{
+		Count: 1000,
+	})
 	if err != nil {
 		log.Errorw("CARDAGO", "PACKAGE", "BLOCKFROST", "ERROR", err)
 		return nil, err
 	}
+	log.Infow("BLOCKFROST", "GET", "DELEGATORS", "RESULT", result)
 
 	return result, nil
 }
@@ -33,6 +36,8 @@ func GetDelegatorsByPoolID(ctx context.Context, bfc bfg.APIClient, poolID string
 	if err != nil {
 		return nil, err
 	}
+	log.Infow("BLOCKFROST", "GET", "DELEGATORS", "COUNT", len(result))
+	log.Infow("BLOCKFROST", "GET", "DELEGATORS", "DATA", result)
 
 	for _, v := range result {
 		delegator := preeb.Delegator{}

@@ -2,6 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"io/ioutil"
+	"os"
 	"time"
 
 	"cardano/cardago/internal/config"
@@ -48,5 +51,9 @@ func main() {
 
 	qualifiedDelegators := preeb.GetQualifiers(delegatorAddresses)
 
+	log.Infow("delegator", "count", len(qualifiedDelegators))
 	log.Infow("delegator", "addresses", qualifiedDelegators)
+
+	eligibleDelegators, _ := json.Marshal(qualifiedDelegators)
+	ioutil.WriteFile("eligible-delegators.json", eligibleDelegators, os.ModePerm)
 }
